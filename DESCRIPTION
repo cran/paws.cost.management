@@ -1,6 +1,6 @@
 Package: paws.cost.management
 Title: Amazon Web Services Cost Management APIs
-Version: 0.1.0
+Version: 0.1.3
 Authors@R: 
     c(person(given = "David",
              family = "Kretch",
@@ -38,10 +38,10 @@ Collate: 'budgets_service.R' 'budgets_interfaces.R'
         'marketplacemetering_operations.R' 'pricing_service.R'
         'pricing_interfaces.R' 'pricing_operations.R'
 NeedsCompilation: no
-Packaged: 2019-05-10 01:36:54 UTC; david.kretch
+Packaged: 2019-07-27 22:06:47 UTC; david.kretch
 Author: David Kretch [aut, cre],
   Adam Banker [aut],
   Amazon.com, Inc. [cph]
 Maintainer: David Kretch <david.kretch@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-05-13 10:10:51 UTC
+Date/Publication: 2019-07-27 23:00:12 UTC
