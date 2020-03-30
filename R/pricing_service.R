@@ -55,7 +55,7 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- pricing()
+#' \dontrun{svc <- pricing()
 #' svc$describe_services(
 #'   FormatVersion = "aws_v1",
 #'   MaxResults = 1L,
@@ -92,8 +92,7 @@ pricing <- function(config = list()) {
   target_prefix = "AWSPriceListService"
 )
 
-.pricing$handlers <- new_handlers("jsonrpc", "v4")
-
 .pricing$service <- function(config = list()) {
-  new_service(.pricing$metadata, .pricing$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.pricing$metadata, handlers, config)
 }

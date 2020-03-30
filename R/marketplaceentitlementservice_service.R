@@ -41,7 +41,7 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- marketplaceentitlementservice()
+#' \dontrun{svc <- marketplaceentitlementservice()
 #' svc$get_entitlements(
 #'   Foo = 123
 #' )}
@@ -74,8 +74,7 @@ marketplaceentitlementservice <- function(config = list()) {
   target_prefix = "AWSMPEntitlementService"
 )
 
-.marketplaceentitlementservice$handlers <- new_handlers("jsonrpc", "v4")
-
 .marketplaceentitlementservice$service <- function(config = list()) {
-  new_service(.marketplaceentitlementservice$metadata, .marketplaceentitlementservice$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.marketplaceentitlementservice$metadata, handlers, config)
 }

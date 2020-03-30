@@ -44,7 +44,7 @@ NULL
 #' ```
 #'
 #' @examples
-#' \donttest{svc <- costexplorer()
+#' \dontrun{svc <- costexplorer()
 #' svc$create_cost_category_definition(
 #'   Foo = 123
 #' )}
@@ -95,8 +95,7 @@ costexplorer <- function(config = list()) {
   target_prefix = "AWSInsightsIndexService"
 )
 
-.costexplorer$handlers <- new_handlers("jsonrpc", "v4")
-
 .costexplorer$service <- function(config = list()) {
-  new_service(.costexplorer$metadata, .costexplorer$handlers, config)
+  handlers <- new_handlers("jsonrpc", "v4")
+  new_service(.costexplorer$metadata, handlers, config)
 }
