@@ -18,7 +18,7 @@ view your estimated savings associated with recommendations with
 consideration of existing Savings Plans or RI benefits, or neither.}
 
 \item{Service}{[required] The specific service that you want recommendations for. The only valid
-value for \code{GetRightsizingRecommendation} is \"\code{AmazonEC2}\".}
+value for \code{GetRightsizingRecommendation} is "\code{AmazonEC2}".}
 
 \item{PageSize}{The number of recommendations that you want returned in a single
 response object.}
@@ -29,8 +29,7 @@ want to retrieve.}
 \description{
 Creates recommendations that help you save cost by identifying idle and
 underutilized Amazon EC2 instances.
-}
-\details{
+
 Recommendations are generated to either downsize or terminate instances,
 along with providing savings detail and metrics. For details on
 calculation and function, see \href{https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/ce-rightsizing.html}{Optimizing Your Cost with Rightsizing Recommendations}
@@ -47,12 +46,12 @@ in the \emph{AWS Billing and Cost Management User Guide}.
     ),
     Not = list(),
     Dimensions = list(
-      Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+      Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
       Values = list(
         "string"
       ),
       MatchOptions = list(
-        "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+        "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
       )
     ),
     Tags = list(
@@ -61,13 +60,16 @@ in the \emph{AWS Billing and Cost Management User Guide}.
         "string"
       ),
       MatchOptions = list(
-        "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+        "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
       )
     ),
     CostCategories = list(
       Key = "string",
       Values = list(
         "string"
+      ),
+      MatchOptions = list(
+        "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
       )
     )
   ),

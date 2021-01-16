@@ -45,7 +45,7 @@ obtain a CustomerIdentifier and Product Code.
 \item Paid container software products sold through AWS Marketplace must
 integrate with the AWS Marketplace Metering Service and call the
 RegisterUsage operation for software entitlement and metering. Free
-and BYOL products for Amazon ECS or Amazon EKS aren\'t required to
+and BYOL products for Amazon ECS or Amazon EKS aren't required to
 call RegisterUsage, but you can do so if you want to receive usage
 data in your seller reports. For more information on using the
 RegisterUsage operation, see \href{https://docs.aws.amazon.com/marketplace/latest/userguide/container-based-products.html}{Container-Based Products}.
@@ -55,7 +55,7 @@ BatchMeterUsage API calls are captured by AWS CloudTrail. You can use
 Cloudtrail to verify that the SaaS metering records that you sent are
 accurate by searching for records with the eventName of BatchMeterUsage.
 You can also use CloudTrail to audit records over time. For more
-information, see the \emph{\href{http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html}{AWS CloudTrail User Guide}}
+information, see the \emph{\href{https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-concepts.html}{AWS CloudTrail User Guide}}
 .
 }
 \section{Service syntax}{
@@ -79,8 +79,8 @@ information, see the \emph{\href{http://docs.aws.amazon.com/awscloudtrail/latest
 \section{Operations}{
 
 \tabular{ll}{
-\link[=marketplacemetering_batch_meter_usage]{batch_meter_usage} \tab BatchMeterUsage is called from a SaaS application listed on the AWS Marketplace to post metering records for a set of customers \cr
-\link[=marketplacemetering_meter_usage]{meter_usage} \tab API to emit metering records \cr
+\link[=marketplacemetering_batch_meter_usage]{batch_meter_usage} \tab BatchMeterUsage is called from a SaaS application listed on the AWS Marketplace to post metering records for a set of customers\cr
+\link[=marketplacemetering_meter_usage]{meter_usage} \tab API to emit metering records\cr
 \link[=marketplacemetering_register_usage]{register_usage} \tab Paid container software products sold through AWS Marketplace must integrate with the AWS Marketplace Metering Service and call the RegisterUsage operation for software entitlement and metering\cr
 \link[=marketplacemetering_resolve_customer]{resolve_customer} \tab ResolveCustomer is called by a SaaS application during the registration process
 }

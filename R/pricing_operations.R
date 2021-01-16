@@ -6,6 +6,7 @@ NULL
 #' Returns the metadata for one service or a list of the metadata for all
 #' services
 #'
+#' @description
 #' Returns the metadata for one service or a list of the metadata for all
 #' services. Use this without a service code to get the service codes for
 #' all services. Use it with a service code, such as `AmazonEC2`, to get
@@ -71,12 +72,13 @@ pricing_describe_services <- function(ServiceCode = NULL, FormatVersion = NULL, 
 
 #' Returns a list of attribute values
 #'
+#' @description
 #' Returns a list of attribute values. Attibutes are similar to the details
 #' in a Price List API offer file. For a list of available attributes, see
 #' [Offer File
-#' Definitions](http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/reading-an-offer.html#pps-defs)
+#' Definitions](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/reading-an-offer.html#pps-defs)
 #' in the [AWS Billing and Cost Management User
-#' Guide](http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-what-is.html).
+#' Guide](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-what-is.html).
 #'
 #' @usage
 #' pricing_get_attribute_values(ServiceCode, AttributeName, NextToken,
@@ -133,6 +135,7 @@ pricing_get_attribute_values <- function(ServiceCode, AttributeName, NextToken =
 
 #' Returns a list of all products that match the filter criteria
 #'
+#' @description
 #' Returns a list of all products that match the filter criteria.
 #'
 #' @usage

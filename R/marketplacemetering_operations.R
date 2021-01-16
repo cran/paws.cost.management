@@ -6,6 +6,7 @@ NULL
 #' BatchMeterUsage is called from a SaaS application listed on the AWS
 #' Marketplace to post metering records for a set of customers
 #'
+#' @description
 #' BatchMeterUsage is called from a SaaS application listed on the AWS
 #' Marketplace to post metering records for a set of customers.
 #' 
@@ -17,6 +18,12 @@ NULL
 #' BatchMeterUsage.
 #' 
 #' BatchMeterUsage can process up to 25 UsageRecords at a time.
+#' 
+#' A UsageRecord can optionally include multiple usage allocations, to
+#' provide customers with usagedata split into buckets by tags that you
+#' define (or allow the customer to define).
+#' 
+#' BatchMeterUsage requests must be less than 1MB in size.
 #'
 #' @usage
 #' marketplacemetering_batch_meter_usage(UsageRecords, ProductCode)
@@ -37,7 +44,18 @@ NULL
 #'       ),
 #'       CustomerIdentifier = "string",
 #'       Dimension = "string",
-#'       Quantity = 123
+#'       Quantity = 123,
+#'       UsageAllocations = list(
+#'         list(
+#'           AllocatedUsageQuantity = 123,
+#'           Tags = list(
+#'             list(
+#'               Key = "string",
+#'               Value = "string"
+#'             )
+#'           )
+#'         )
+#'       )
 #'     )
 #'   ),
 #'   ProductCode = "string"
@@ -66,15 +84,20 @@ marketplacemetering_batch_meter_usage <- function(UsageRecords, ProductCode) {
 
 #' API to emit metering records
 #'
+#' @description
 #' API to emit metering records. For identical requests, the API is
 #' idempotent. It simply returns the metering record ID.
 #' 
-#' MeterUsage is authenticated on the buyer\'s AWS account using
-#' credentials from the EC2 instance, ECS task, or EKS pod.
+#' MeterUsage is authenticated on the buyer's AWS account using credentials
+#' from the EC2 instance, ECS task, or EKS pod.
+#' 
+#' MeterUsage can optionally include multiple usage allocations, to provide
+#' customers with usage data split into buckets by tags that you define (or
+#' allow the customer to define).
 #'
 #' @usage
 #' marketplacemetering_meter_usage(ProductCode, Timestamp, UsageDimension,
-#'   UsageQuantity, DryRun)
+#'   UsageQuantity, DryRun, UsageAllocations)
 #'
 #' @param ProductCode &#91;required&#93; Product code is used to uniquely identify a product in AWS Marketplace.
 #' The product code should be the same as the one used during the
@@ -89,6 +112,11 @@ marketplacemetering_batch_meter_usage <- function(UsageRecords, ProductCode) {
 #' does not make the request. If you have the permissions, the request
 #' returns DryRunOperation; otherwise, it returns UnauthorizedException.
 #' Defaults to `false` if not specified.
+#' @param UsageAllocations The set of UsageAllocations to submit.
+#' 
+#' The sum of all UsageAllocation quantities must equal the UsageQuantity
+#' of the MeterUsage request, and each UsageAllocation must have a unique
+#' set of tags (include no tags).
 #'
 #' @section Request syntax:
 #' ```
@@ -99,21 +127,32 @@ marketplacemetering_batch_meter_usage <- function(UsageRecords, ProductCode) {
 #'   ),
 #'   UsageDimension = "string",
 #'   UsageQuantity = 123,
-#'   DryRun = TRUE|FALSE
+#'   DryRun = TRUE|FALSE,
+#'   UsageAllocations = list(
+#'     list(
+#'       AllocatedUsageQuantity = 123,
+#'       Tags = list(
+#'         list(
+#'           Key = "string",
+#'           Value = "string"
+#'         )
+#'       )
+#'     )
+#'   )
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname marketplacemetering_meter_usage
-marketplacemetering_meter_usage <- function(ProductCode, Timestamp, UsageDimension, UsageQuantity = NULL, DryRun = NULL) {
+marketplacemetering_meter_usage <- function(ProductCode, Timestamp, UsageDimension, UsageQuantity = NULL, DryRun = NULL, UsageAllocations = NULL) {
   op <- new_operation(
     name = "MeterUsage",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .marketplacemetering$meter_usage_input(ProductCode = ProductCode, Timestamp = Timestamp, UsageDimension = UsageDimension, UsageQuantity = UsageQuantity, DryRun = DryRun)
+  input <- .marketplacemetering$meter_usage_input(ProductCode = ProductCode, Timestamp = Timestamp, UsageDimension = UsageDimension, UsageQuantity = UsageQuantity, DryRun = DryRun, UsageAllocations = UsageAllocations)
   output <- .marketplacemetering$meter_usage_output()
   config <- get_config()
   svc <- .marketplacemetering$service(config)
@@ -127,10 +166,11 @@ marketplacemetering_meter_usage <- function(ProductCode, Timestamp, UsageDimensi
 #' integrate with the AWS Marketplace Metering Service and call the
 #' RegisterUsage operation for software entitlement and metering
 #'
+#' @description
 #' Paid container software products sold through AWS Marketplace must
 #' integrate with the AWS Marketplace Metering Service and call the
 #' RegisterUsage operation for software entitlement and metering. Free and
-#' BYOL products for Amazon ECS or Amazon EKS aren\'t required to call
+#' BYOL products for Amazon ECS or Amazon EKS aren't required to call
 #' RegisterUsage, but you may choose to do so if you would like to receive
 #' usage data in your seller reports. The sections below explain the
 #' behavior of RegisterUsage. RegisterUsage performs two primary functions:
@@ -156,7 +196,7 @@ marketplacemetering_meter_usage <- function(ProductCode, Timestamp, UsageDimensi
 #'     Amazon EKS will launch a task on all 10 cluster nodes and the
 #'     customer will be charged: (10 * hourly\\_rate). Metering for
 #'     software use is automatically handled by the AWS Marketplace
-#'     Metering Control Plane \\-- your software is not required to perform
+#'     Metering Control Plane -- your software is not required to perform
 #'     any metering specific actions, other than call RegisterUsage once
 #'     for metering of software use to commence. The AWS Marketplace
 #'     Metering Control Plane will also continue to bill customers for
@@ -206,6 +246,7 @@ marketplacemetering_register_usage <- function(ProductCode, PublicKeyVersion, No
 #' ResolveCustomer is called by a SaaS application during the registration
 #' process
 #'
+#' @description
 #' ResolveCustomer is called by a SaaS application during the registration
 #' process. When a buyer visits your website during the registration
 #' process, the buyer submits a registration token through their browser.

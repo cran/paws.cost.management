@@ -7,6 +7,7 @@ NULL
 #' publishes the requested data set to the specified S3 bucket and notifies
 #' the specified SNS topic once the data is available
 #'
+#' @description
 #' Given a data set type and data set publication date, asynchronously publishes the requested data set to the specified S3 bucket and notifies the specified SNS topic once the data is available. Returns a unique request identifier that can be used to correlate requests with notifications from the SNS topic. Data sets will be published in comma-separated values (CSV) format with the file name \{data_set_type\}_YYYY-MM-DD.csv. If a file with the same name already exists (e.g. if the same data set is requested twice), the original file will be overwritten by the new file. Requires a Role with an attached permissions policy providing Allow permissions for the following actions: s3:PutObject, s3:GetBucketLocation, sns:GetTopicAttributes, sns:Publish, iam:GetRolePolicy.
 #'
 #' @usage
@@ -109,6 +110,26 @@ NULL
 #' 
 #'     From 2017-09-15 to present: Available monthly on the 15th day of the
 #'     month by 24:00 UTC.
+#' 
+#' -   **disbursed\\_amount\\_by\\_product\\_with\\_uncollected\\_funds**
+#' 
+#'     This data set is deprecated. Download related reports from AMMP
+#'     instead!
+#' 
+#' -   **customer\\_profile\\_by\\_industry**
+#' 
+#'     This data set is deprecated. Download related reports from AMMP
+#'     instead!
+#' 
+#' -   **customer\\_profile\\_by\\_revenue**
+#' 
+#'     This data set is deprecated. Download related reports from AMMP
+#'     instead!
+#' 
+#' -   **customer\\_profile\\_by\\_geography**
+#' 
+#'     This data set is deprecated. Download related reports from AMMP
+#'     instead!
 #' @param dataSetPublicationDate &#91;required&#93; The date a data set was published. For daily data sets, provide a date with day-level granularity for the desired day. For monthly data sets except those with prefix disbursed_amount, provide a date with month-level granularity for the desired month (the day value will be ignored). For data sets with prefix disbursed_amount, provide a date with day-level granularity for the desired day. For these data sets we will look backwards in time over the range of 31 days until the first data set is found (the latest one).
 #' @param roleNameArn &#91;required&#93; The Amazon Resource Name (ARN) of the Role with an attached permissions policy to interact with the provided AWS services.
 #' @param destinationS3BucketName &#91;required&#93; The name (friendly name, not ARN) of the destination S3 bucket.
@@ -157,6 +178,7 @@ marketplacecommerceanalytics_generate_data_set <- function(dataSetType, dataSetP
 #' requested customer support data to the specified S3 bucket and notifies
 #' the specified SNS topic once the data is available
 #'
+#' @description
 #' Given a data set type and a from date, asynchronously publishes the requested customer support data to the specified S3 bucket and notifies the specified SNS topic once the data is available. Returns a unique request identifier that can be used to correlate requests with notifications from the SNS topic. Data sets will be published in comma-separated values (CSV) format with the file name \{data_set_type\}_YYYY-MM-DD'T'HH-mm-ss'Z'.csv. If a file with the same name already exists (e.g. if the same data set is requested twice), the original file will be overwritten by the new file. Requires a Role with an attached permissions policy providing Allow permissions for the following actions: s3:PutObject, s3:GetBucketLocation, sns:GetTopicAttributes, sns:Publish, iam:GetRolePolicy.
 #'
 #' @usage

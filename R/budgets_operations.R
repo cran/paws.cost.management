@@ -5,6 +5,7 @@ NULL
 
 #' Creates a budget and, if included, notifications and subscribers
 #'
+#' @description
 #' Creates a budget and, if included, notifications and subscribers.
 #' 
 #' Only one of `BudgetLimit` or `PlannedBudgetLimits` can be present in the
@@ -123,8 +124,101 @@ budgets_create_budget <- function(AccountId, Budget, NotificationsWithSubscriber
 }
 .budgets$operations$create_budget <- budgets_create_budget
 
+#' Creates a budget action
+#'
+#' @description
+#' Creates a budget action.
+#'
+#' @usage
+#' budgets_create_budget_action(AccountId, BudgetName, NotificationType,
+#'   ActionType, ActionThreshold, Definition, ExecutionRoleArn,
+#'   ApprovalModel, Subscribers)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param BudgetName &#91;required&#93; 
+#' @param NotificationType &#91;required&#93; 
+#' @param ActionType &#91;required&#93; The type of action. This defines the type of tasks that can be carried
+#' out by this action. This field also determines the format for
+#' definition.
+#' @param ActionThreshold &#91;required&#93; 
+#' @param Definition &#91;required&#93; 
+#' @param ExecutionRoleArn &#91;required&#93; The role passed for action execution and reversion. Roles and actions
+#' must be in the same account.
+#' @param ApprovalModel &#91;required&#93; This specifies if the action needs manual or automatic approval.
+#' @param Subscribers &#91;required&#93; 
+#'
+#' @section Request syntax:
+#' ```
+#' svc$create_budget_action(
+#'   AccountId = "string",
+#'   BudgetName = "string",
+#'   NotificationType = "ACTUAL"|"FORECASTED",
+#'   ActionType = "APPLY_IAM_POLICY"|"APPLY_SCP_POLICY"|"RUN_SSM_DOCUMENTS",
+#'   ActionThreshold = list(
+#'     ActionThresholdValue = 123.0,
+#'     ActionThresholdType = "PERCENTAGE"|"ABSOLUTE_VALUE"
+#'   ),
+#'   Definition = list(
+#'     IamActionDefinition = list(
+#'       PolicyArn = "string",
+#'       Roles = list(
+#'         "string"
+#'       ),
+#'       Groups = list(
+#'         "string"
+#'       ),
+#'       Users = list(
+#'         "string"
+#'       )
+#'     ),
+#'     ScpActionDefinition = list(
+#'       PolicyId = "string",
+#'       TargetIds = list(
+#'         "string"
+#'       )
+#'     ),
+#'     SsmActionDefinition = list(
+#'       ActionSubType = "STOP_EC2_INSTANCES"|"STOP_RDS_INSTANCES",
+#'       Region = "string",
+#'       InstanceIds = list(
+#'         "string"
+#'       )
+#'     )
+#'   ),
+#'   ExecutionRoleArn = "string",
+#'   ApprovalModel = "AUTOMATIC"|"MANUAL",
+#'   Subscribers = list(
+#'     list(
+#'       SubscriptionType = "SNS"|"EMAIL",
+#'       Address = "string"
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_create_budget_action
+budgets_create_budget_action <- function(AccountId, BudgetName, NotificationType, ActionType, ActionThreshold, Definition, ExecutionRoleArn, ApprovalModel, Subscribers) {
+  op <- new_operation(
+    name = "CreateBudgetAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$create_budget_action_input(AccountId = AccountId, BudgetName = BudgetName, NotificationType = NotificationType, ActionType = ActionType, ActionThreshold = ActionThreshold, Definition = Definition, ExecutionRoleArn = ExecutionRoleArn, ApprovalModel = ApprovalModel, Subscribers = Subscribers)
+  output <- .budgets$create_budget_action_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$create_budget_action <- budgets_create_budget_action
+
 #' Creates a notification
 #'
+#' @description
 #' Creates a notification. You must create the budget before you create the
 #' associated notification.
 #'
@@ -184,6 +278,7 @@ budgets_create_notification <- function(AccountId, BudgetName, Notification, Sub
 
 #' Creates a subscriber
 #'
+#' @description
 #' Creates a subscriber. You must create the associated budget and
 #' notification before you create the subscriber.
 #'
@@ -239,6 +334,7 @@ budgets_create_subscriber <- function(AccountId, BudgetName, Notification, Subsc
 
 #' Deletes a budget
 #'
+#' @description
 #' Deletes a budget. You can delete your budget at any time.
 #' 
 #' Deleting a budget also deletes the notifications and subscribers that
@@ -279,8 +375,50 @@ budgets_delete_budget <- function(AccountId, BudgetName) {
 }
 .budgets$operations$delete_budget <- budgets_delete_budget
 
+#' Deletes a budget action
+#'
+#' @description
+#' Deletes a budget action.
+#'
+#' @usage
+#' budgets_delete_budget_action(AccountId, BudgetName, ActionId)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param BudgetName &#91;required&#93; 
+#' @param ActionId &#91;required&#93; A system-generated universally unique identifier (UUID) for the action.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_budget_action(
+#'   AccountId = "string",
+#'   BudgetName = "string",
+#'   ActionId = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_delete_budget_action
+budgets_delete_budget_action <- function(AccountId, BudgetName, ActionId) {
+  op <- new_operation(
+    name = "DeleteBudgetAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$delete_budget_action_input(AccountId = AccountId, BudgetName = BudgetName, ActionId = ActionId)
+  output <- .budgets$delete_budget_action_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$delete_budget_action <- budgets_delete_budget_action
+
 #' Deletes a notification
 #'
+#' @description
 #' Deletes a notification.
 #' 
 #' Deleting a notification also deletes the subscribers that are associated
@@ -331,6 +469,7 @@ budgets_delete_notification <- function(AccountId, BudgetName, Notification) {
 
 #' Deletes a subscriber
 #'
+#' @description
 #' Deletes a subscriber.
 #' 
 #' Deleting the last subscriber to a notification also deletes the
@@ -387,6 +526,7 @@ budgets_delete_subscriber <- function(AccountId, BudgetName, Notification, Subsc
 
 #' Describes a budget
 #'
+#' @description
 #' Describes a budget.
 #' 
 #' The Request Syntax section shows the `BudgetLimit` syntax. For
@@ -429,10 +569,193 @@ budgets_describe_budget <- function(AccountId, BudgetName) {
 }
 .budgets$operations$describe_budget <- budgets_describe_budget
 
+#' Describes a budget action detail
+#'
+#' @description
+#' Describes a budget action detail.
+#'
+#' @usage
+#' budgets_describe_budget_action(AccountId, BudgetName, ActionId)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param BudgetName &#91;required&#93; 
+#' @param ActionId &#91;required&#93; A system-generated universally unique identifier (UUID) for the action.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_budget_action(
+#'   AccountId = "string",
+#'   BudgetName = "string",
+#'   ActionId = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_describe_budget_action
+budgets_describe_budget_action <- function(AccountId, BudgetName, ActionId) {
+  op <- new_operation(
+    name = "DescribeBudgetAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$describe_budget_action_input(AccountId = AccountId, BudgetName = BudgetName, ActionId = ActionId)
+  output <- .budgets$describe_budget_action_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$describe_budget_action <- budgets_describe_budget_action
+
+#' Describes a budget action history detail
+#'
+#' @description
+#' Describes a budget action history detail.
+#'
+#' @usage
+#' budgets_describe_budget_action_histories(AccountId, BudgetName,
+#'   ActionId, TimePeriod, MaxResults, NextToken)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param BudgetName &#91;required&#93; 
+#' @param ActionId &#91;required&#93; A system-generated universally unique identifier (UUID) for the action.
+#' @param TimePeriod 
+#' @param MaxResults 
+#' @param NextToken 
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_budget_action_histories(
+#'   AccountId = "string",
+#'   BudgetName = "string",
+#'   ActionId = "string",
+#'   TimePeriod = list(
+#'     Start = as.POSIXct(
+#'       "2015-01-01"
+#'     ),
+#'     End = as.POSIXct(
+#'       "2015-01-01"
+#'     )
+#'   ),
+#'   MaxResults = 123,
+#'   NextToken = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_describe_budget_action_histories
+budgets_describe_budget_action_histories <- function(AccountId, BudgetName, ActionId, TimePeriod = NULL, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "DescribeBudgetActionHistories",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$describe_budget_action_histories_input(AccountId = AccountId, BudgetName = BudgetName, ActionId = ActionId, TimePeriod = TimePeriod, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .budgets$describe_budget_action_histories_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$describe_budget_action_histories <- budgets_describe_budget_action_histories
+
+#' Describes all of the budget actions for an account
+#'
+#' @description
+#' Describes all of the budget actions for an account.
+#'
+#' @usage
+#' budgets_describe_budget_actions_for_account(AccountId, MaxResults,
+#'   NextToken)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param MaxResults 
+#' @param NextToken 
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_budget_actions_for_account(
+#'   AccountId = "string",
+#'   MaxResults = 123,
+#'   NextToken = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_describe_budget_actions_for_account
+budgets_describe_budget_actions_for_account <- function(AccountId, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "DescribeBudgetActionsForAccount",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$describe_budget_actions_for_account_input(AccountId = AccountId, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .budgets$describe_budget_actions_for_account_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$describe_budget_actions_for_account <- budgets_describe_budget_actions_for_account
+
+#' Describes all of the budget actions for a budget
+#'
+#' @description
+#' Describes all of the budget actions for a budget.
+#'
+#' @usage
+#' budgets_describe_budget_actions_for_budget(AccountId, BudgetName,
+#'   MaxResults, NextToken)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param BudgetName &#91;required&#93; 
+#' @param MaxResults 
+#' @param NextToken 
+#'
+#' @section Request syntax:
+#' ```
+#' svc$describe_budget_actions_for_budget(
+#'   AccountId = "string",
+#'   BudgetName = "string",
+#'   MaxResults = 123,
+#'   NextToken = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_describe_budget_actions_for_budget
+budgets_describe_budget_actions_for_budget <- function(AccountId, BudgetName, MaxResults = NULL, NextToken = NULL) {
+  op <- new_operation(
+    name = "DescribeBudgetActionsForBudget",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$describe_budget_actions_for_budget_input(AccountId = AccountId, BudgetName = BudgetName, MaxResults = MaxResults, NextToken = NextToken)
+  output <- .budgets$describe_budget_actions_for_budget_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$describe_budget_actions_for_budget <- budgets_describe_budget_actions_for_budget
+
 #' Describes the history for DAILY, MONTHLY, and QUARTERLY budgets
 #'
+#' @description
 #' Describes the history for `DAILY`, `MONTHLY`, and `QUARTERLY` budgets.
-#' Budget history isn\'t available for `ANNUAL` budgets.
+#' Budget history isn't available for `ANNUAL` budgets.
 #'
 #' @usage
 #' budgets_describe_budget_performance_history(AccountId, BudgetName,
@@ -485,6 +808,7 @@ budgets_describe_budget_performance_history <- function(AccountId, BudgetName, T
 
 #' Lists the budgets that are associated with an account
 #'
+#' @description
 #' Lists the budgets that are associated with an account.
 #' 
 #' The Request Syntax section shows the `BudgetLimit` syntax. For
@@ -533,6 +857,7 @@ budgets_describe_budgets <- function(AccountId, MaxResults = NULL, NextToken = N
 
 #' Lists the notifications that are associated with a budget
 #'
+#' @description
 #' Lists the notifications that are associated with a budget.
 #'
 #' @usage
@@ -579,6 +904,7 @@ budgets_describe_notifications_for_budget <- function(AccountId, BudgetName, Max
 
 #' Lists the subscribers that are associated with a notification
 #'
+#' @description
 #' Lists the subscribers that are associated with a notification.
 #'
 #' @usage
@@ -631,8 +957,53 @@ budgets_describe_subscribers_for_notification <- function(AccountId, BudgetName,
 }
 .budgets$operations$describe_subscribers_for_notification <- budgets_describe_subscribers_for_notification
 
+#' Executes a budget action
+#'
+#' @description
+#' Executes a budget action.
+#'
+#' @usage
+#' budgets_execute_budget_action(AccountId, BudgetName, ActionId,
+#'   ExecutionType)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param BudgetName &#91;required&#93; 
+#' @param ActionId &#91;required&#93; A system-generated universally unique identifier (UUID) for the action.
+#' @param ExecutionType &#91;required&#93; The type of execution.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$execute_budget_action(
+#'   AccountId = "string",
+#'   BudgetName = "string",
+#'   ActionId = "string",
+#'   ExecutionType = "APPROVE_BUDGET_ACTION"|"RETRY_BUDGET_ACTION"|"REVERSE_BUDGET_ACTION"|"RESET_BUDGET_ACTION"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_execute_budget_action
+budgets_execute_budget_action <- function(AccountId, BudgetName, ActionId, ExecutionType) {
+  op <- new_operation(
+    name = "ExecuteBudgetAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$execute_budget_action_input(AccountId = AccountId, BudgetName = BudgetName, ActionId = ActionId, ExecutionType = ExecutionType)
+  output <- .budgets$execute_budget_action_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$execute_budget_action <- budgets_execute_budget_action
+
 #' Updates a budget
 #'
+#' @description
 #' Updates a budget. You can change every part of a budget except for the
 #' `budgetName` and the `calculatedSpend`. When you modify a budget, the
 #' `calculatedSpend` drops to zero until AWS has new usage data to use for
@@ -733,8 +1104,99 @@ budgets_update_budget <- function(AccountId, NewBudget) {
 }
 .budgets$operations$update_budget <- budgets_update_budget
 
+#' Updates a budget action
+#'
+#' @description
+#' Updates a budget action.
+#'
+#' @usage
+#' budgets_update_budget_action(AccountId, BudgetName, ActionId,
+#'   NotificationType, ActionThreshold, Definition, ExecutionRoleArn,
+#'   ApprovalModel, Subscribers)
+#'
+#' @param AccountId &#91;required&#93; 
+#' @param BudgetName &#91;required&#93; 
+#' @param ActionId &#91;required&#93; A system-generated universally unique identifier (UUID) for the action.
+#' @param NotificationType 
+#' @param ActionThreshold 
+#' @param Definition 
+#' @param ExecutionRoleArn The role passed for action execution and reversion. Roles and actions
+#' must be in the same account.
+#' @param ApprovalModel This specifies if the action needs manual or automatic approval.
+#' @param Subscribers 
+#'
+#' @section Request syntax:
+#' ```
+#' svc$update_budget_action(
+#'   AccountId = "string",
+#'   BudgetName = "string",
+#'   ActionId = "string",
+#'   NotificationType = "ACTUAL"|"FORECASTED",
+#'   ActionThreshold = list(
+#'     ActionThresholdValue = 123.0,
+#'     ActionThresholdType = "PERCENTAGE"|"ABSOLUTE_VALUE"
+#'   ),
+#'   Definition = list(
+#'     IamActionDefinition = list(
+#'       PolicyArn = "string",
+#'       Roles = list(
+#'         "string"
+#'       ),
+#'       Groups = list(
+#'         "string"
+#'       ),
+#'       Users = list(
+#'         "string"
+#'       )
+#'     ),
+#'     ScpActionDefinition = list(
+#'       PolicyId = "string",
+#'       TargetIds = list(
+#'         "string"
+#'       )
+#'     ),
+#'     SsmActionDefinition = list(
+#'       ActionSubType = "STOP_EC2_INSTANCES"|"STOP_RDS_INSTANCES",
+#'       Region = "string",
+#'       InstanceIds = list(
+#'         "string"
+#'       )
+#'     )
+#'   ),
+#'   ExecutionRoleArn = "string",
+#'   ApprovalModel = "AUTOMATIC"|"MANUAL",
+#'   Subscribers = list(
+#'     list(
+#'       SubscriptionType = "SNS"|"EMAIL",
+#'       Address = "string"
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname budgets_update_budget_action
+budgets_update_budget_action <- function(AccountId, BudgetName, ActionId, NotificationType = NULL, ActionThreshold = NULL, Definition = NULL, ExecutionRoleArn = NULL, ApprovalModel = NULL, Subscribers = NULL) {
+  op <- new_operation(
+    name = "UpdateBudgetAction",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .budgets$update_budget_action_input(AccountId = AccountId, BudgetName = BudgetName, ActionId = ActionId, NotificationType = NotificationType, ActionThreshold = ActionThreshold, Definition = Definition, ExecutionRoleArn = ExecutionRoleArn, ApprovalModel = ApprovalModel, Subscribers = Subscribers)
+  output <- .budgets$update_budget_action_output()
+  config <- get_config()
+  svc <- .budgets$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.budgets$operations$update_budget_action <- budgets_update_budget_action
+
 #' Updates a notification
 #'
+#' @description
 #' Updates a notification.
 #'
 #' @usage
@@ -791,6 +1253,7 @@ budgets_update_notification <- function(AccountId, BudgetName, OldNotification, 
 
 #' Updates a subscriber
 #'
+#' @description
 #' Updates a subscriber.
 #'
 #' @usage

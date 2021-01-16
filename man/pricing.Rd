@@ -26,7 +26,7 @@ the attribute names for that service. After you have the service code
 and attribute names, you can use \code{GetAttributeValues} to see what values
 are available for an attribute. With the service code and an attribute
 name and value, you can use \code{GetProducts} to find specific products that
-you\'re interested in, such as an \code{AmazonEC2} instance, with a
+you're interested in, such as an \code{AmazonEC2} instance, with a
 \verb{Provisioned IOPS} \code{volumeType}.
 
 Service Endpoint
@@ -59,7 +59,7 @@ AWS Price List Service API provides the following two endpoints:
 
 \tabular{ll}{
 \link[=pricing_describe_services]{describe_services} \tab Returns the metadata for one service or a list of the metadata for all services\cr
-\link[=pricing_get_attribute_values]{get_attribute_values} \tab Returns a list of attribute values \cr
+\link[=pricing_get_attribute_values]{get_attribute_values} \tab Returns a list of attribute values\cr
 \link[=pricing_get_products]{get_products} \tab Returns a list of all products that match the filter criteria
 }
 }

@@ -3,8 +3,149 @@
 #' @include costexplorer_service.R
 NULL
 
+#' Creates a new cost anomaly detection monitor with the requested type and
+#' monitor specification
+#'
+#' @description
+#' Creates a new cost anomaly detection monitor with the requested type and
+#' monitor specification.
+#'
+#' @usage
+#' costexplorer_create_anomaly_monitor(AnomalyMonitor)
+#'
+#' @param AnomalyMonitor &#91;required&#93; The cost anomaly detection monitor object that you want to create.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$create_anomaly_monitor(
+#'   AnomalyMonitor = list(
+#'     MonitorArn = "string",
+#'     MonitorName = "string",
+#'     CreationDate = "string",
+#'     LastUpdatedDate = "string",
+#'     LastEvaluatedDate = "string",
+#'     MonitorType = "DIMENSIONAL"|"CUSTOM",
+#'     MonitorDimension = "SERVICE",
+#'     MonitorSpecification = list(
+#'       Or = list(
+#'         list()
+#'       ),
+#'       And = list(
+#'         list()
+#'       ),
+#'       Not = list(),
+#'       Dimensions = list(
+#'         Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
+#'         Values = list(
+#'           "string"
+#'         ),
+#'         MatchOptions = list(
+#'           "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         )
+#'       ),
+#'       Tags = list(
+#'         Key = "string",
+#'         Values = list(
+#'           "string"
+#'         ),
+#'         MatchOptions = list(
+#'           "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         )
+#'       ),
+#'       CostCategories = list(
+#'         Key = "string",
+#'         Values = list(
+#'           "string"
+#'         ),
+#'         MatchOptions = list(
+#'           "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         )
+#'       )
+#'     ),
+#'     DimensionalValueCount = 123
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_create_anomaly_monitor
+costexplorer_create_anomaly_monitor <- function(AnomalyMonitor) {
+  op <- new_operation(
+    name = "CreateAnomalyMonitor",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$create_anomaly_monitor_input(AnomalyMonitor = AnomalyMonitor)
+  output <- .costexplorer$create_anomaly_monitor_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$create_anomaly_monitor <- costexplorer_create_anomaly_monitor
+
+#' Adds a subscription to a cost anomaly detection monitor
+#'
+#' @description
+#' Adds a subscription to a cost anomaly detection monitor. You can use
+#' each subscription to define subscribers with email or SNS notifications.
+#' Email subscribers can set a dollar threshold and a time frequency for
+#' receiving notifications.
+#'
+#' @usage
+#' costexplorer_create_anomaly_subscription(AnomalySubscription)
+#'
+#' @param AnomalySubscription &#91;required&#93; The cost anomaly subscription object that you want to create.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$create_anomaly_subscription(
+#'   AnomalySubscription = list(
+#'     SubscriptionArn = "string",
+#'     AccountId = "string",
+#'     MonitorArnList = list(
+#'       "string"
+#'     ),
+#'     Subscribers = list(
+#'       list(
+#'         Address = "string",
+#'         Type = "EMAIL"|"SNS",
+#'         Status = "CONFIRMED"|"DECLINED"
+#'       )
+#'     ),
+#'     Threshold = 123.0,
+#'     Frequency = "DAILY"|"IMMEDIATE"|"WEEKLY",
+#'     SubscriptionName = "string"
+#'   )
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_create_anomaly_subscription
+costexplorer_create_anomaly_subscription <- function(AnomalySubscription) {
+  op <- new_operation(
+    name = "CreateAnomalySubscription",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$create_anomaly_subscription_input(AnomalySubscription = AnomalySubscription)
+  output <- .costexplorer$create_anomaly_subscription_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$create_anomaly_subscription <- costexplorer_create_anomaly_subscription
+
 #' Creates a new Cost Category with the requested name and rules
 #'
+#' @description
 #' Creates a new Cost Category with the requested name and rules.
 #'
 #' @usage
@@ -33,12 +174,12 @@ NULL
 #'         ),
 #'         Not = list(),
 #'         Dimensions = list(
-#'           Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'           Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'           Values = list(
 #'             "string"
 #'           ),
 #'           MatchOptions = list(
-#'             "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'             "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'           )
 #'         ),
 #'         Tags = list(
@@ -47,13 +188,16 @@ NULL
 #'             "string"
 #'           ),
 #'           MatchOptions = list(
-#'             "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'             "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'           )
 #'         ),
 #'         CostCategories = list(
 #'           Key = "string",
 #'           Values = list(
 #'             "string"
+#'           ),
+#'           MatchOptions = list(
+#'             "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'           )
 #'         )
 #'       )
@@ -82,8 +226,85 @@ costexplorer_create_cost_category_definition <- function(Name, RuleVersion, Rule
 }
 .costexplorer$operations$create_cost_category_definition <- costexplorer_create_cost_category_definition
 
+#' Deletes a cost anomaly monitor
+#'
+#' @description
+#' Deletes a cost anomaly monitor.
+#'
+#' @usage
+#' costexplorer_delete_anomaly_monitor(MonitorArn)
+#'
+#' @param MonitorArn &#91;required&#93; The unique identifier of the cost anomaly monitor that you want to
+#' delete.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_anomaly_monitor(
+#'   MonitorArn = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_delete_anomaly_monitor
+costexplorer_delete_anomaly_monitor <- function(MonitorArn) {
+  op <- new_operation(
+    name = "DeleteAnomalyMonitor",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$delete_anomaly_monitor_input(MonitorArn = MonitorArn)
+  output <- .costexplorer$delete_anomaly_monitor_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$delete_anomaly_monitor <- costexplorer_delete_anomaly_monitor
+
+#' Deletes a cost anomaly subscription
+#'
+#' @description
+#' Deletes a cost anomaly subscription.
+#'
+#' @usage
+#' costexplorer_delete_anomaly_subscription(SubscriptionArn)
+#'
+#' @param SubscriptionArn &#91;required&#93; The unique identifier of the cost anomaly subscription that you want to
+#' delete.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$delete_anomaly_subscription(
+#'   SubscriptionArn = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_delete_anomaly_subscription
+costexplorer_delete_anomaly_subscription <- function(SubscriptionArn) {
+  op <- new_operation(
+    name = "DeleteAnomalySubscription",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$delete_anomaly_subscription_input(SubscriptionArn = SubscriptionArn)
+  output <- .costexplorer$delete_anomaly_subscription_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$delete_anomaly_subscription <- costexplorer_delete_anomaly_subscription
+
 #' Deletes a Cost Category
 #'
+#' @description
 #' Deletes a Cost Category. Expenses from this month going forward will no
 #' longer be categorized with this Cost Category.
 #'
@@ -122,12 +343,13 @@ costexplorer_delete_cost_category_definition <- function(CostCategoryArn) {
 #' Returns the name, ARN, rules, definition, and effective dates of a Cost
 #' Category that's defined in the account
 #'
+#' @description
 #' Returns the name, ARN, rules, definition, and effective dates of a Cost
-#' Category that\'s defined in the account.
+#' Category that's defined in the account.
 #' 
 #' You have the option to use `EffectiveOn` to return a Cost Category that
 #' is active on a specific date. If there is no `EffectiveOn` specified,
-#' you'll see a Cost Category that is effective on the current date. If
+#' you’ll see a Cost Category that is effective on the current date. If
 #' Cost Category is still effective, `EffectiveEnd` is omitted in the
 #' response.
 #'
@@ -166,8 +388,171 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 }
 .costexplorer$operations$describe_cost_category_definition <- costexplorer_describe_cost_category_definition
 
+#' Retrieves all of the cost anomalies detected on your account, during the
+#' time period specified by the DateInterval object
+#'
+#' @description
+#' Retrieves all of the cost anomalies detected on your account, during the
+#' time period specified by the `DateInterval` object.
+#'
+#' @usage
+#' costexplorer_get_anomalies(MonitorArn, DateInterval, Feedback,
+#'   TotalImpact, NextPageToken, MaxResults)
+#'
+#' @param MonitorArn Retrieves all of the cost anomalies detected for a specific cost anomaly
+#' monitor Amazon Resource Name (ARN).
+#' @param DateInterval &#91;required&#93; Assigns the start and end dates for retrieving cost anomalies. The
+#' returned anomaly object will have an `AnomalyEndDate` in the specified
+#' time range.
+#' @param Feedback Filters anomaly results by the feedback field on the anomaly object.
+#' @param TotalImpact Filters anomaly results by the total impact field on the anomaly object.
+#' For example, you can filter anomalies `GREATER_THAN 200.00` to retrieve
+#' anomalies, with an estimated dollar impact greater than 200.
+#' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
+#' when the response from a previous call has more results than the maximum
+#' page size.
+#' @param MaxResults The number of entries a paginated response contains.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$get_anomalies(
+#'   MonitorArn = "string",
+#'   DateInterval = list(
+#'     StartDate = "string",
+#'     EndDate = "string"
+#'   ),
+#'   Feedback = "YES"|"NO"|"PLANNED_ACTIVITY",
+#'   TotalImpact = list(
+#'     NumericOperator = "EQUAL"|"GREATER_THAN_OR_EQUAL"|"LESS_THAN_OR_EQUAL"|"GREATER_THAN"|"LESS_THAN"|"BETWEEN",
+#'     StartValue = 123.0,
+#'     EndValue = 123.0
+#'   ),
+#'   NextPageToken = "string",
+#'   MaxResults = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_get_anomalies
+costexplorer_get_anomalies <- function(MonitorArn = NULL, DateInterval, Feedback = NULL, TotalImpact = NULL, NextPageToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "GetAnomalies",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$get_anomalies_input(MonitorArn = MonitorArn, DateInterval = DateInterval, Feedback = Feedback, TotalImpact = TotalImpact, NextPageToken = NextPageToken, MaxResults = MaxResults)
+  output <- .costexplorer$get_anomalies_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$get_anomalies <- costexplorer_get_anomalies
+
+#' Retrieves the cost anomaly monitor definitions for your account
+#'
+#' @description
+#' Retrieves the cost anomaly monitor definitions for your account. You can
+#' filter using a list of cost anomaly monitor Amazon Resource Names
+#' (ARNs).
+#'
+#' @usage
+#' costexplorer_get_anomaly_monitors(MonitorArnList, NextPageToken,
+#'   MaxResults)
+#'
+#' @param MonitorArnList A list of cost anomaly monitor ARNs.
+#' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
+#' when the response from a previous call has more results than the maximum
+#' page size.
+#' @param MaxResults The number of entries a paginated response contains.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$get_anomaly_monitors(
+#'   MonitorArnList = list(
+#'     "string"
+#'   ),
+#'   NextPageToken = "string",
+#'   MaxResults = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_get_anomaly_monitors
+costexplorer_get_anomaly_monitors <- function(MonitorArnList = NULL, NextPageToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "GetAnomalyMonitors",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$get_anomaly_monitors_input(MonitorArnList = MonitorArnList, NextPageToken = NextPageToken, MaxResults = MaxResults)
+  output <- .costexplorer$get_anomaly_monitors_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$get_anomaly_monitors <- costexplorer_get_anomaly_monitors
+
+#' Retrieves the cost anomaly subscription objects for your account
+#'
+#' @description
+#' Retrieves the cost anomaly subscription objects for your account. You
+#' can filter using a list of cost anomaly monitor Amazon Resource Names
+#' (ARNs).
+#'
+#' @usage
+#' costexplorer_get_anomaly_subscriptions(SubscriptionArnList, MonitorArn,
+#'   NextPageToken, MaxResults)
+#'
+#' @param SubscriptionArnList A list of cost anomaly subscription ARNs.
+#' @param MonitorArn Cost anomaly monitor ARNs.
+#' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
+#' when the response from a previous call has more results than the maximum
+#' page size.
+#' @param MaxResults The number of entries a paginated response contains.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$get_anomaly_subscriptions(
+#'   SubscriptionArnList = list(
+#'     "string"
+#'   ),
+#'   MonitorArn = "string",
+#'   NextPageToken = "string",
+#'   MaxResults = 123
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_get_anomaly_subscriptions
+costexplorer_get_anomaly_subscriptions <- function(SubscriptionArnList = NULL, MonitorArn = NULL, NextPageToken = NULL, MaxResults = NULL) {
+  op <- new_operation(
+    name = "GetAnomalySubscriptions",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$get_anomaly_subscriptions_input(SubscriptionArnList = SubscriptionArnList, MonitorArn = MonitorArn, NextPageToken = NextPageToken, MaxResults = MaxResults)
+  output <- .costexplorer$get_anomaly_subscriptions_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$get_anomaly_subscriptions <- costexplorer_get_anomaly_subscriptions
+
 #' Retrieves cost and usage metrics for your account
 #'
+#' @description
 #' Retrieves cost and usage metrics for your account. You can specify which
 #' cost and usage-related metric, such as `BlendedCosts` or
 #' `UsageQuantity`, that you want the request to return. You can also
@@ -175,8 +560,12 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 #' `AZ`, in a specific time range. For a complete list of valid dimensions,
 #' see the
 #' [GetDimensionValues](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html)
-#' operation. Master accounts in an organization in AWS Organizations have
-#' access to all member accounts.
+#' operation. Management account in an organization in AWS Organizations
+#' have access to all member accounts.
+#' 
+#' For information about filter limitations, see [Quotas and
+#' restrictions](https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-limits.html)
+#' in the *Billing and Cost Management User Guide*.
 #'
 #' @usage
 #' costexplorer_get_cost_and_usage(TimePeriod, Granularity, Filter,
@@ -188,18 +577,18 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 #' retrieved from `2017-01-01` up to and including `2017-04-30` but not
 #' including `2017-05-01`.
 #' @param Granularity Sets the AWS cost granularity to `MONTHLY` or `DAILY`, or `HOURLY`. If
-#' `Granularity` isn\'t set, the response object doesn\'t include the
+#' `Granularity` isn't set, the response object doesn't include the
 #' `Granularity`, either `MONTHLY` or `DAILY`, or `HOURLY`.
 #' @param Filter Filters AWS costs by different dimensions. For example, you can specify
 #' `SERVICE` and `LINKED_ACCOUNT` and get the costs that are associated
-#' with that account\'s usage of that service. You can nest `Expression`
+#' with that account's usage of that service. You can nest `Expression`
 #' objects to define any combination of dimension filters. For more
 #' information, see
 #' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html).
-#' @param Metrics Which metrics are returned in the query. For more information about
-#' blended and unblended rates, see [Why does the \"blended\" annotation
+#' @param Metrics &#91;required&#93; Which metrics are returned in the query. For more information about
+#' blended and unblended rates, see [Why does the "blended" annotation
 #' appear on some line items in my
-#' bill?](http://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/).
+#' bill?](https://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/).
 #' 
 #' Valid values are `AmortizedCost`, `BlendedCost`, `NetAmortizedCost`,
 #' `NetUnblendedCost`, `NormalizedUsageAmount`, `UnblendedCost`, and
@@ -207,7 +596,7 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 #' 
 #' If you return the `UsageQuantity` metric, the service aggregates all
 #' usage numbers without taking into account the units. For example, if you
-#' aggregate `usageQuantity` across all of Amazon EC2, the results aren\'t
+#' aggregate `usageQuantity` across all of Amazon EC2, the results aren't
 #' meaningful because Amazon EC2 compute hours and data transfer are
 #' measured in different units (for example, hours vs. GB). To get more
 #' meaningful `UsageQuantity` metrics, filter by `UsageType` or
@@ -215,7 +604,7 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 #' 
 #' `Metrics` is required for `GetCostAndUsage` requests.
 #' @param GroupBy You can group AWS costs using up to two different groups, either
-#' dimensions, tag keys, or both.
+#' dimensions, tag keys, cost categories, or any two group by types.
 #' 
 #' When you group by tag key, you get all tag values, including empty
 #' strings.
@@ -244,12 +633,12 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -258,13 +647,16 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
@@ -284,7 +676,7 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_cost_and_usage
-costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filter = NULL, Metrics = NULL, GroupBy = NULL, NextPageToken = NULL) {
+costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filter = NULL, Metrics, GroupBy = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetCostAndUsage",
     http_method = "POST",
@@ -303,6 +695,7 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 
 #' Retrieves cost and usage metrics with resources for your account
 #'
+#' @description
 #' Retrieves cost and usage metrics with resources for your account. You
 #' can specify which cost and usage-related metric, such as `BlendedCosts`
 #' or `UsageQuantity`, that you want the request to return. You can also
@@ -310,9 +703,9 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 #' `AZ`, in a specific time range. For a complete list of valid dimensions,
 #' see the
 #' [GetDimensionValues](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html)
-#' operation. Master accounts in an organization in AWS Organizations have
-#' access to all member accounts. This API is currently available for the
-#' Amazon Elastic Compute Cloud -- Compute service only.
+#' operation. Management account in an organization in AWS Organizations
+#' have access to all member accounts. This API is currently available for
+#' the Amazon Elastic Compute Cloud – Compute service only.
 #' 
 #' This is an opt-in only feature. You can enable this feature from the
 #' Cost Explorer Settings page. For information on how to access the
@@ -332,21 +725,23 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 #' `2017-01-01` up to and including `2017-04-30` but not including
 #' `2017-05-01`.
 #' @param Granularity Sets the AWS cost granularity to `MONTHLY`, `DAILY`, or `HOURLY`. If
-#' `Granularity` isn\'t set, the response object doesn\'t include the
+#' `Granularity` isn't set, the response object doesn't include the
 #' `Granularity`, `MONTHLY`, `DAILY`, or `HOURLY`.
-#' @param Filter Filters Amazon Web Services costs by different dimensions. For example,
+#' @param Filter &#91;required&#93; Filters Amazon Web Services costs by different dimensions. For example,
 #' you can specify `SERVICE` and `LINKED_ACCOUNT` and get the costs that
-#' are associated with that account\'s usage of that service. You can nest
+#' are associated with that account's usage of that service. You can nest
 #' `Expression` objects to define any combination of dimension filters. For
 #' more information, see
 #' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html).
 #' 
 #' The `GetCostAndUsageWithResources` operation requires that you either
-#' group by or filter by a `ResourceId`.
+#' group by or filter by a `ResourceId`. It requires the
+#' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html)
+#' `"SERVICE = Amazon Elastic Compute Cloud - Compute"` in the filter.
 #' @param Metrics Which metrics are returned in the query. For more information about
-#' blended and unblended rates, see [Why does the \"blended\" annotation
+#' blended and unblended rates, see [Why does the "blended" annotation
 #' appear on some line items in my
-#' bill?](http://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/).
+#' bill?](https://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/).
 #' 
 #' Valid values are `AmortizedCost`, `BlendedCost`, `NetAmortizedCost`,
 #' `NetUnblendedCost`, `NormalizedUsageAmount`, `UnblendedCost`, and
@@ -354,7 +749,7 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 #' 
 #' If you return the `UsageQuantity` metric, the service aggregates all
 #' usage numbers without taking the units into account. For example, if you
-#' aggregate `usageQuantity` across all of Amazon EC2, the results aren\'t
+#' aggregate `usageQuantity` across all of Amazon EC2, the results aren't
 #' meaningful because Amazon EC2 compute hours and data transfer are
 #' measured in different units (for example, hours vs. GB). To get more
 #' meaningful `UsageQuantity` metrics, filter by `UsageType` or
@@ -362,7 +757,7 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 #' 
 #' `Metrics` is required for `GetCostAndUsageWithResources` requests.
 #' @param GroupBy You can group Amazon Web Services costs using up to two different
-#' groups: either dimensions, tag keys, or both.
+#' groups: `DIMENSION`, `TAG`, `COST_CATEGORY`.
 #' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
 #' when the response from a previous call has more results than the maximum
 #' page size.
@@ -384,12 +779,12 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -398,13 +793,16 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
@@ -424,7 +822,7 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity = NULL, Filt
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_cost_and_usage_with_resources
-costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granularity = NULL, Filter = NULL, Metrics = NULL, GroupBy = NULL, NextPageToken = NULL) {
+costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granularity = NULL, Filter, Metrics = NULL, GroupBy = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetCostAndUsageWithResources",
     http_method = "POST",
@@ -441,10 +839,141 @@ costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granulari
 }
 .costexplorer$operations$get_cost_and_usage_with_resources <- costexplorer_get_cost_and_usage_with_resources
 
+#' Retrieves an array of Cost Category names and values incurred cost
+#'
+#' @description
+#' Retrieves an array of Cost Category names and values incurred cost.
+#' 
+#' If some Cost Category names and values are not associated with any cost,
+#' they will not be returned by this API.
+#'
+#' @usage
+#' costexplorer_get_cost_categories(SearchString, TimePeriod,
+#'   CostCategoryName, Filter, SortBy, MaxResults, NextPageToken)
+#'
+#' @param SearchString The value that you want to search the filter values for.
+#' 
+#' If you do not specify a `CostCategoryName`, `SearchString` will be used
+#' to filter Cost Category names that match the `SearchString` pattern. If
+#' you do specifiy a `CostCategoryName`, `SearchString` will be used to
+#' filter Cost Category values that match the `SearchString` pattern.
+#' @param TimePeriod &#91;required&#93; 
+#' @param CostCategoryName 
+#' @param Filter 
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The key represents cost and usage metrics. The following values are
+#' supported:
+#' 
+#' -   `BlendedCost`
+#' 
+#' -   `UnblendedCost`
+#' 
+#' -   `AmortizedCost`
+#' 
+#' -   `NetAmortizedCost`
+#' 
+#' -   `NetUnblendedCost`
+#' 
+#' -   `UsageQuantity`
+#' 
+#' -   `NormalizedUsageAmount`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
+#' 
+#' When using `SortBy`, `NextPageToken` and `SearchString` are not
+#' supported.
+#' @param MaxResults This field is only used when `SortBy` is provided in the request.
+#' 
+#' The maximum number of objects that to be returned for this request. If
+#' `MaxResults` is not specified with `SortBy`, the request will return
+#' 1000 results as the default value for this parameter.
+#' @param NextPageToken If the number of objects that are still available for retrieval exceeds
+#' the limit, AWS returns a NextPageToken value in the response. To
+#' retrieve the next batch of objects, provide the NextPageToken from the
+#' prior call in your next request.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$get_cost_categories(
+#'   SearchString = "string",
+#'   TimePeriod = list(
+#'     Start = "string",
+#'     End = "string"
+#'   ),
+#'   CostCategoryName = "string",
+#'   Filter = list(
+#'     Or = list(
+#'       list()
+#'     ),
+#'     And = list(
+#'       list()
+#'     ),
+#'     Not = list(),
+#'     Dimensions = list(
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     Tags = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     CostCategories = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     )
+#'   ),
+#'   SortBy = list(
+#'     list(
+#'       Key = "string",
+#'       SortOrder = "ASCENDING"|"DESCENDING"
+#'     )
+#'   ),
+#'   MaxResults = 123,
+#'   NextPageToken = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_get_cost_categories
+costexplorer_get_cost_categories <- function(SearchString = NULL, TimePeriod, CostCategoryName = NULL, Filter = NULL, SortBy = NULL, MaxResults = NULL, NextPageToken = NULL) {
+  op <- new_operation(
+    name = "GetCostCategories",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$get_cost_categories_input(SearchString = SearchString, TimePeriod = TimePeriod, CostCategoryName = CostCategoryName, Filter = Filter, SortBy = SortBy, MaxResults = MaxResults, NextPageToken = NextPageToken)
+  output <- .costexplorer$get_cost_categories_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$get_cost_categories <- costexplorer_get_cost_categories
+
 #' Retrieves a forecast for how much Amazon Web Services predicts that you
 #' will spend over the forecast time period that you select, based on your
 #' past costs
 #'
+#' @description
 #' Retrieves a forecast for how much Amazon Web Services predicts that you
 #' will spend over the forecast time period that you select, based on your
 #' past costs.
@@ -453,11 +982,13 @@ costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granulari
 #' costexplorer_get_cost_forecast(TimePeriod, Metric, Granularity, Filter,
 #'   PredictionIntervalLevel)
 #'
-#' @param TimePeriod &#91;required&#93; The period of time that you want the forecast to cover.
+#' @param TimePeriod &#91;required&#93; The period of time that you want the forecast to cover. The start date
+#' must be equal to or no later than the current date to avoid a validation
+#' error.
 #' @param Metric &#91;required&#93; Which metric Cost Explorer uses to create your forecast. For more
 #' information about blended and unblended rates, see [Why does the
-#' \"blended\" annotation appear on some line items in my
-#' bill?](http://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/).
+#' "blended" annotation appear on some line items in my
+#' bill?](https://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/).
 #' 
 #' Valid values for a `GetCostForecast` call are the following:
 #' 
@@ -501,12 +1032,12 @@ costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granulari
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -515,13 +1046,16 @@ costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granulari
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
@@ -552,13 +1086,14 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #' Retrieves all available filter values for a specified filter over a
 #' period of time
 #'
+#' @description
 #' Retrieves all available filter values for a specified filter over a
 #' period of time. You can search the dimension values for an arbitrary
 #' string.
 #'
 #' @usage
 #' costexplorer_get_dimension_values(SearchString, TimePeriod, Dimension,
-#'   Context, NextPageToken)
+#'   Context, Filter, SortBy, MaxResults, NextPageToken)
 #'
 #' @param SearchString The value that you want to search the filter values for.
 #' @param TimePeriod &#91;required&#93; The start and end dates for retrieving the dimension values. The start
@@ -613,8 +1148,10 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #'     operation includes a unit attribute. Examples include GB and Hrs.
 #' 
 #' -   USAGE\\_TYPE\\_GROUP - The grouping of common usage types. An example
-#'     is Amazon EC2: CloudWatch -- Alarms. The response for this operation
+#'     is Amazon EC2: CloudWatch – Alarms. The response for this operation
 #'     includes a unit attribute.
+#' 
+#' -   REGION - The AWS Region.
 #' 
 #' -   RECORD\\_TYPE - The different types of charges such as RI fees, usage
 #'     costs, tax refunds, and credits.
@@ -673,6 +1210,35 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #'     AWS ID of the member account.
 #' 
 #' -   SAVINGS\\_PLAN\\_ARN - The unique identifier for your Savings Plan
+#' @param Filter 
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The key represents cost and usage metrics. The following values are
+#' supported:
+#' 
+#' -   `BlendedCost`
+#' 
+#' -   `UnblendedCost`
+#' 
+#' -   `AmortizedCost`
+#' 
+#' -   `NetAmortizedCost`
+#' 
+#' -   `NetUnblendedCost`
+#' 
+#' -   `UsageQuantity`
+#' 
+#' -   `NormalizedUsageAmount`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
+#' 
+#' When you specify a `SortBy` paramater, the context must be
+#' `COST_AND_USAGE`. Further, when using `SortBy`, `NextPageToken` and
+#' `SearchString` are not supported.
+#' @param MaxResults This field is only used when SortBy is provided in the request. The
+#' maximum number of objects that to be returned for this request. If
+#' MaxResults is not specified with SortBy, the request will return 1000
+#' results as the default value for this parameter.
 #' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
 #' when the response from a previous call has more results than the maximum
 #' page size.
@@ -685,8 +1251,51 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #'     Start = "string",
 #'     End = "string"
 #'   ),
-#'   Dimension = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'   Dimension = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'   Context = "COST_AND_USAGE"|"RESERVATIONS"|"SAVINGS_PLANS",
+#'   Filter = list(
+#'     Or = list(
+#'       list()
+#'     ),
+#'     And = list(
+#'       list()
+#'     ),
+#'     Not = list(),
+#'     Dimensions = list(
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     Tags = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     CostCategories = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     )
+#'   ),
+#'   SortBy = list(
+#'     list(
+#'       Key = "string",
+#'       SortOrder = "ASCENDING"|"DESCENDING"
+#'     )
+#'   ),
+#'   MaxResults = 123,
 #'   NextPageToken = "string"
 #' )
 #' ```
@@ -694,14 +1303,14 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_dimension_values
-costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, Dimension, Context = NULL, NextPageToken = NULL) {
+costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, Dimension, Context = NULL, Filter = NULL, SortBy = NULL, MaxResults = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetDimensionValues",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_dimension_values_input(SearchString = SearchString, TimePeriod = TimePeriod, Dimension = Dimension, Context = Context, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_dimension_values_input(SearchString = SearchString, TimePeriod = TimePeriod, Dimension = Dimension, Context = Context, Filter = Filter, SortBy = SortBy, MaxResults = MaxResults, NextPageToken = NextPageToken)
   output <- .costexplorer$get_dimension_values_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -713,13 +1322,14 @@ costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, D
 
 #' Retrieves the reservation coverage for your account
 #'
+#' @description
 #' Retrieves the reservation coverage for your account. This enables you to
 #' see how much of your Amazon Elastic Compute Cloud, Amazon ElastiCache,
 #' Amazon Relational Database Service, or Amazon Redshift usage is covered
-#' by a reservation. An organization\'s master account can see the coverage
-#' of the associated member accounts. This supports dimensions, Cost
-#' Categories, and nested expressions. For any time period, you can filter
-#' data about reservation usage by the following dimensions:
+#' by a reservation. An organization's management account can see the
+#' coverage of the associated member accounts. This supports dimensions,
+#' Cost Categories, and nested expressions. For any time period, you can
+#' filter data about reservation usage by the following dimensions:
 #' 
 #' -   AZ
 #' 
@@ -750,7 +1360,7 @@ costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, D
 #'
 #' @usage
 #' costexplorer_get_reservation_coverage(TimePeriod, GroupBy, Granularity,
-#'   Filter, Metrics, NextPageToken)
+#'   Filter, Metrics, NextPageToken, SortBy, MaxResults)
 #'
 #' @param TimePeriod &#91;required&#93; The start and end dates of the period that you want to retrieve data
 #' about reservation coverage for. You can retrieve data for a maximum of
@@ -783,9 +1393,9 @@ costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, D
 #' @param Granularity The granularity of the AWS cost data for the reservation. Valid values
 #' are `MONTHLY` and `DAILY`.
 #' 
-#' If `GroupBy` is set, `Granularity` can\'t be set. If `Granularity`
-#' isn\'t set, the response object doesn\'t include `Granularity`, either
-#' `MONTHLY` or `DAILY`.
+#' If `GroupBy` is set, `Granularity` can't be set. If `Granularity` isn't
+#' set, the response object doesn't include `Granularity`, either `MONTHLY`
+#' or `DAILY`.
 #' 
 #' The `GetReservationCoverage` operation supports only `DAILY` and
 #' `MONTHLY` granularities.
@@ -820,9 +1430,9 @@ costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, D
 #' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html)
 #' object as the other operations, but only `AND` is supported among each
 #' dimension. You can nest only one level deep. If there are multiple
-#' values for a dimension, they are OR\'d together.
+#' values for a dimension, they are OR'd together.
 #' 
-#' If you don\'t provide a `SERVICE` filter, Cost Explorer defaults to EC2.
+#' If you don't provide a `SERVICE` filter, Cost Explorer defaults to EC2.
 #' 
 #' Cost category is also supported.
 #' @param Metrics The measurement that you want your reservation coverage reported in.
@@ -832,6 +1442,35 @@ costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, D
 #' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
 #' when the response from a previous call has more results than the maximum
 #' page size.
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The following values are supported for `Key`:
+#' 
+#' -   `OnDemandCost`
+#' 
+#' -   `CoverageHoursPercentage`
+#' 
+#' -   `OnDemandHours`
+#' 
+#' -   `ReservedHours`
+#' 
+#' -   `TotalRunningHours`
+#' 
+#' -   `CoverageNormalizedUnitsPercentage`
+#' 
+#' -   `OnDemandNormalizedUnits`
+#' 
+#' -   `ReservedNormalizedUnits`
+#' 
+#' -   `TotalRunningNormalizedUnits`
+#' 
+#' -   `Time`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
+#' @param MaxResults The maximum number of objects that you returned for this request. If
+#' more objects are available, in the response, AWS provides a
+#' NextPageToken value that you can use in a subsequent call to get the
+#' next batch of objects.
 #'
 #' @section Request syntax:
 #' ```
@@ -856,12 +1495,12 @@ costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, D
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -870,34 +1509,42 @@ costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, D
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
 #'   Metrics = list(
 #'     "string"
 #'   ),
-#'   NextPageToken = "string"
+#'   NextPageToken = "string",
+#'   SortBy = list(
+#'     Key = "string",
+#'     SortOrder = "ASCENDING"|"DESCENDING"
+#'   ),
+#'   MaxResults = 123
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_reservation_coverage
-costexplorer_get_reservation_coverage <- function(TimePeriod, GroupBy = NULL, Granularity = NULL, Filter = NULL, Metrics = NULL, NextPageToken = NULL) {
+costexplorer_get_reservation_coverage <- function(TimePeriod, GroupBy = NULL, Granularity = NULL, Filter = NULL, Metrics = NULL, NextPageToken = NULL, SortBy = NULL, MaxResults = NULL) {
   op <- new_operation(
     name = "GetReservationCoverage",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_reservation_coverage_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, Metrics = Metrics, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_reservation_coverage_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, Metrics = Metrics, NextPageToken = NextPageToken, SortBy = SortBy, MaxResults = MaxResults)
   output <- .costexplorer$get_reservation_coverage_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -909,9 +1556,10 @@ costexplorer_get_reservation_coverage <- function(TimePeriod, GroupBy = NULL, Gr
 
 #' Gets recommendations for which reservations to purchase
 #'
+#' @description
 #' Gets recommendations for which reservations to purchase. These
 #' recommendations could help you reduce your costs. Reservations provide a
-#' discounted hourly rate (up to 75%) compared to On-Demand pricing.
+#' discounted hourly rate (up to 75\%) compared to On-Demand pricing.
 #' 
 #' AWS generates your recommendations by identifying your On-Demand usage
 #' during a specific time period and collecting your usage into categories
@@ -932,15 +1580,16 @@ costexplorer_get_reservation_coverage <- function(TimePeriod, GroupBy = NULL, Gr
 #'
 #' @usage
 #' costexplorer_get_reservation_purchase_recommendation(AccountId, Service,
-#'   AccountScope, LookbackPeriodInDays, TermInYears, PaymentOption,
+#'   Filter, AccountScope, LookbackPeriodInDays, TermInYears, PaymentOption,
 #'   ServiceSpecification, PageSize, NextPageToken)
 #'
 #' @param AccountId The account ID that is associated with the recommendation.
 #' @param Service &#91;required&#93; The specific service that you want recommendations for.
+#' @param Filter 
 #' @param AccountScope The account scope that you want your recommendations for. Amazon Web
-#' Services calculates recommendations including the payer account and
-#' linked accounts if the value is set to `PAYER`. If the value is
-#' `LINKED`, recommendations are calculated for individual linked accounts
+#' Services calculates recommendations including the management account and
+#' member accounts if the value is set to `PAYER`. If the value is
+#' `LINKED`, recommendations are calculated for individual member accounts
 #' only.
 #' @param LookbackPeriodInDays The number of previous days that you want AWS to consider when it
 #' calculates your recommendations.
@@ -959,6 +1608,42 @@ costexplorer_get_reservation_coverage <- function(TimePeriod, GroupBy = NULL, Gr
 #' svc$get_reservation_purchase_recommendation(
 #'   AccountId = "string",
 #'   Service = "string",
+#'   Filter = list(
+#'     Or = list(
+#'       list()
+#'     ),
+#'     And = list(
+#'       list()
+#'     ),
+#'     Not = list(),
+#'     Dimensions = list(
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     Tags = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     CostCategories = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     )
+#'   ),
 #'   AccountScope = "PAYER"|"LINKED",
 #'   LookbackPeriodInDays = "SEVEN_DAYS"|"THIRTY_DAYS"|"SIXTY_DAYS",
 #'   TermInYears = "ONE_YEAR"|"THREE_YEARS",
@@ -976,14 +1661,14 @@ costexplorer_get_reservation_coverage <- function(TimePeriod, GroupBy = NULL, Gr
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_reservation_purchase_recommendation
-costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NULL, Service, AccountScope = NULL, LookbackPeriodInDays = NULL, TermInYears = NULL, PaymentOption = NULL, ServiceSpecification = NULL, PageSize = NULL, NextPageToken = NULL) {
+costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NULL, Service, Filter = NULL, AccountScope = NULL, LookbackPeriodInDays = NULL, TermInYears = NULL, PaymentOption = NULL, ServiceSpecification = NULL, PageSize = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetReservationPurchaseRecommendation",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_reservation_purchase_recommendation_input(AccountId = AccountId, Service = Service, AccountScope = AccountScope, LookbackPeriodInDays = LookbackPeriodInDays, TermInYears = TermInYears, PaymentOption = PaymentOption, ServiceSpecification = ServiceSpecification, PageSize = PageSize, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_reservation_purchase_recommendation_input(AccountId = AccountId, Service = Service, Filter = Filter, AccountScope = AccountScope, LookbackPeriodInDays = LookbackPeriodInDays, TermInYears = TermInYears, PaymentOption = PaymentOption, ServiceSpecification = ServiceSpecification, PageSize = PageSize, NextPageToken = NextPageToken)
   output <- .costexplorer$get_reservation_purchase_recommendation_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -995,15 +1680,16 @@ costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NUL
 
 #' Retrieves the reservation utilization for your account
 #'
-#' Retrieves the reservation utilization for your account. Master accounts
-#' in an organization have access to member accounts. You can filter data
-#' by dimensions in a time period. You can use `GetDimensionValues` to
-#' determine the possible dimension values. Currently, you can group only
-#' by `SUBSCRIPTION_ID`.
+#' @description
+#' Retrieves the reservation utilization for your account. Management
+#' account in an organization have access to member accounts. You can
+#' filter data by dimensions in a time period. You can use
+#' `GetDimensionValues` to determine the possible dimension values.
+#' Currently, you can group only by `SUBSCRIPTION_ID`.
 #'
 #' @usage
 #' costexplorer_get_reservation_utilization(TimePeriod, GroupBy,
-#'   Granularity, Filter, NextPageToken)
+#'   Granularity, Filter, SortBy, NextPageToken, MaxResults)
 #'
 #' @param TimePeriod &#91;required&#93; Sets the start and end dates for retrieving RI utilization. The start
 #' date is inclusive, but the end date is exclusive. For example, if
@@ -1011,9 +1697,9 @@ costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NUL
 #' usage data is retrieved from `2017-01-01` up to and including
 #' `2017-04-30` but not including `2017-05-01`.
 #' @param GroupBy Groups only by `SUBSCRIPTION_ID`. Metadata is included.
-#' @param Granularity If `GroupBy` is set, `Granularity` can\'t be set. If `Granularity`
-#' isn\'t set, the response object doesn\'t include `Granularity`, either
-#' `MONTHLY` or `DAILY`. If both `GroupBy` and `Granularity` aren\'t set,
+#' @param Granularity If `GroupBy` is set, `Granularity` can't be set. If `Granularity` isn't
+#' set, the response object doesn't include `Granularity`, either `MONTHLY`
+#' or `DAILY`. If both `GroupBy` and `Granularity` aren't set,
 #' `GetReservationUtilization` defaults to `DAILY`.
 #' 
 #' The `GetReservationUtilization` operation supports only `DAILY` and
@@ -1047,10 +1733,53 @@ costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NUL
 #' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html)
 #' object as the other operations, but only `AND` is supported among each
 #' dimension, and nesting is supported up to only one level deep. If there
-#' are multiple values for a dimension, they are OR\'d together.
+#' are multiple values for a dimension, they are OR'd together.
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The following values are supported for `Key`:
+#' 
+#' -   `UtilizationPercentage`
+#' 
+#' -   `UtilizationPercentageInUnits`
+#' 
+#' -   `PurchasedHours`
+#' 
+#' -   `PurchasedUnits`
+#' 
+#' -   `TotalActualHours`
+#' 
+#' -   `TotalActualUnits`
+#' 
+#' -   `UnusedHours`
+#' 
+#' -   `UnusedUnits`
+#' 
+#' -   `OnDemandCostOfRIHoursUsed`
+#' 
+#' -   `NetRISavings`
+#' 
+#' -   `TotalPotentialRISavings`
+#' 
+#' -   `AmortizedUpfrontFee`
+#' 
+#' -   `AmortizedRecurringFee`
+#' 
+#' -   `TotalAmortizedFee`
+#' 
+#' -   `RICostForUnusedHours`
+#' 
+#' -   `RealizedSavings`
+#' 
+#' -   `UnrealizedSavings`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
 #' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
 #' when the response from a previous call has more results than the maximum
 #' page size.
+#' @param MaxResults The maximum number of objects that you returned for this request. If
+#' more objects are available, in the response, AWS provides a
+#' NextPageToken value that you can use in a subsequent call to get the
+#' next batch of objects.
 #'
 #' @section Request syntax:
 #' ```
@@ -1075,12 +1804,12 @@ costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NUL
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -1089,31 +1818,39 @@ costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NUL
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
-#'   NextPageToken = "string"
+#'   SortBy = list(
+#'     Key = "string",
+#'     SortOrder = "ASCENDING"|"DESCENDING"
+#'   ),
+#'   NextPageToken = "string",
+#'   MaxResults = 123
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_reservation_utilization
-costexplorer_get_reservation_utilization <- function(TimePeriod, GroupBy = NULL, Granularity = NULL, Filter = NULL, NextPageToken = NULL) {
+costexplorer_get_reservation_utilization <- function(TimePeriod, GroupBy = NULL, Granularity = NULL, Filter = NULL, SortBy = NULL, NextPageToken = NULL, MaxResults = NULL) {
   op <- new_operation(
     name = "GetReservationUtilization",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_reservation_utilization_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_reservation_utilization_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, SortBy = SortBy, NextPageToken = NextPageToken, MaxResults = MaxResults)
   output <- .costexplorer$get_reservation_utilization_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -1126,6 +1863,7 @@ costexplorer_get_reservation_utilization <- function(TimePeriod, GroupBy = NULL,
 #' Creates recommendations that help you save cost by identifying idle and
 #' underutilized Amazon EC2 instances
 #'
+#' @description
 #' Creates recommendations that help you save cost by identifying idle and
 #' underutilized Amazon EC2 instances.
 #' 
@@ -1146,7 +1884,7 @@ costexplorer_get_reservation_utilization <- function(TimePeriod, GroupBy = NULL,
 #' view your estimated savings associated with recommendations with
 #' consideration of existing Savings Plans or RI benefits, or neither.
 #' @param Service &#91;required&#93; The specific service that you want recommendations for. The only valid
-#' value for `GetRightsizingRecommendation` is \"`AmazonEC2`\".
+#' value for `GetRightsizingRecommendation` is "`AmazonEC2`".
 #' @param PageSize The number of recommendations that you want returned in a single
 #' response object.
 #' @param NextPageToken The pagination token that indicates the next set of results that you
@@ -1164,12 +1902,12 @@ costexplorer_get_reservation_utilization <- function(TimePeriod, GroupBy = NULL,
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -1178,13 +1916,16 @@ costexplorer_get_reservation_utilization <- function(TimePeriod, GroupBy = NULL,
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
@@ -1220,9 +1961,10 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
 
 #' Retrieves the Savings Plans covered for your account
 #'
+#' @description
 #' Retrieves the Savings Plans covered for your account. This enables you
 #' to see how much of your cost is covered by a Savings Plan. An
-#' organization's master account can see the coverage of the associated
+#' organization’s management account can see the coverage of the associated
 #' member accounts. This supports dimensions, Cost Categories, and nested
 #' expressions. For any time period, you can filter data for Savings Plans
 #' usage with the following dimensions:
@@ -1240,16 +1982,16 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
 #'
 #' @usage
 #' costexplorer_get_savings_plans_coverage(TimePeriod, GroupBy,
-#'   Granularity, Filter, Metrics, NextToken, MaxResults)
+#'   Granularity, Filter, Metrics, NextToken, MaxResults, SortBy)
 #'
 #' @param TimePeriod &#91;required&#93; The time period that you want the usage and costs for. The `Start` date
 #' must be within 13 months. The `End` date must be after the `Start` date,
-#' and before the current date. Future dates can\'t be used as an `End`
+#' and before the current date. Future dates can't be used as an `End`
 #' date.
 #' @param GroupBy You can group the data using the attributes `INSTANCE_FAMILY`, `REGION`,
 #' or `SERVICE`.
 #' @param Granularity The granularity of the Amazon Web Services cost data for your Savings
-#' Plans. `Granularity` can\'t be set if `GroupBy` is set.
+#' Plans. `Granularity` can't be set if `GroupBy` is set.
 #' 
 #' The `GetSavingsPlansCoverage` operation supports only `DAILY` and
 #' `MONTHLY` granularities.
@@ -1267,7 +2009,7 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
 #' `GetSavingsPlansCoverage` uses the same
 #' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html)
 #' object as the other operations, but only `AND` is supported among each
-#' dimension. If there are multiple values for a dimension, they are OR\'d
+#' dimension. If there are multiple values for a dimension, they are OR'd
 #' together.
 #' 
 #' Cost category is also supported.
@@ -1278,6 +2020,25 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
 #' results than the maximum page size.
 #' @param MaxResults The number of items to be returned in a response. The default is `20`,
 #' with a minimum value of `1`.
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The following values are supported for `Key`:
+#' 
+#' -   `SpendCoveredBySavingsPlan`
+#' 
+#' -   `OnDemandCost`
+#' 
+#' -   `CoveragePercentage`
+#' 
+#' -   `TotalCost`
+#' 
+#' -   `InstanceFamily`
+#' 
+#' -   `Region`
+#' 
+#' -   `Service`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
 #'
 #' @section Request syntax:
 #' ```
@@ -1302,12 +2063,12 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -1316,13 +2077,16 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
@@ -1330,21 +2094,25 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
 #'     "string"
 #'   ),
 #'   NextToken = "string",
-#'   MaxResults = 123
+#'   MaxResults = 123,
+#'   SortBy = list(
+#'     Key = "string",
+#'     SortOrder = "ASCENDING"|"DESCENDING"
+#'   )
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_savings_plans_coverage
-costexplorer_get_savings_plans_coverage <- function(TimePeriod, GroupBy = NULL, Granularity = NULL, Filter = NULL, Metrics = NULL, NextToken = NULL, MaxResults = NULL) {
+costexplorer_get_savings_plans_coverage <- function(TimePeriod, GroupBy = NULL, Granularity = NULL, Filter = NULL, Metrics = NULL, NextToken = NULL, MaxResults = NULL, SortBy = NULL) {
   op <- new_operation(
     name = "GetSavingsPlansCoverage",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_savings_plans_coverage_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, Metrics = Metrics, NextToken = NextToken, MaxResults = MaxResults)
+  input <- .costexplorer$get_savings_plans_coverage_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, Metrics = Metrics, NextToken = NextToken, MaxResults = MaxResults, SortBy = SortBy)
   output <- .costexplorer$get_savings_plans_coverage_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -1357,6 +2125,7 @@ costexplorer_get_savings_plans_coverage <- function(TimePeriod, GroupBy = NULL, 
 #' Retrieves your request parameters, Savings Plan Recommendations Summary
 #' and Details
 #'
+#' @description
 #' Retrieves your request parameters, Savings Plan Recommendations Summary
 #' and Details.
 #'
@@ -1370,9 +2139,9 @@ costexplorer_get_savings_plans_coverage <- function(TimePeriod, GroupBy = NULL, 
 #' recommendations.
 #' @param PaymentOption &#91;required&#93; The payment option used to generate these recommendations.
 #' @param AccountScope The account scope that you want your recommendations for. Amazon Web
-#' Services calculates recommendations including the payer account and
-#' linked accounts if the value is set to `PAYER`. If the value is
-#' `LINKED`, recommendations are calculated for individual linked accounts
+#' Services calculates recommendations including the management account and
+#' member accounts if the value is set to `PAYER`. If the value is
+#' `LINKED`, recommendations are calculated for individual member accounts
 #' only.
 #' @param NextPageToken The token to retrieve the next set of results. Amazon Web Services
 #' provides the token when the response from a previous call has more
@@ -1412,12 +2181,12 @@ costexplorer_get_savings_plans_coverage <- function(TimePeriod, GroupBy = NULL, 
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -1426,13 +2195,16 @@ costexplorer_get_savings_plans_coverage <- function(TimePeriod, GroupBy = NULL, 
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   )
@@ -1462,8 +2234,9 @@ costexplorer_get_savings_plans_purchase_recommendation <- function(SavingsPlansT
 #' Retrieves the Savings Plans utilization for your account across date
 #' ranges with daily or monthly granularity
 #'
+#' @description
 #' Retrieves the Savings Plans utilization for your account across date
-#' ranges with daily or monthly granularity. Master accounts in an
+#' ranges with daily or monthly granularity. Management account in an
 #' organization have access to member accounts. You can use
 #' `GetDimensionValues` in `SAVINGS_PLANS` to determine the possible
 #' dimension values.
@@ -1473,11 +2246,11 @@ costexplorer_get_savings_plans_purchase_recommendation <- function(SavingsPlansT
 #'
 #' @usage
 #' costexplorer_get_savings_plans_utilization(TimePeriod, Granularity,
-#'   Filter)
+#'   Filter, SortBy)
 #'
 #' @param TimePeriod &#91;required&#93; The time period that you want the usage and costs for. The `Start` date
 #' must be within 13 months. The `End` date must be after the `Start` date,
-#' and before the current date. Future dates can\'t be used as an `End`
+#' and before the current date. Future dates can't be used as an `End`
 #' date.
 #' @param Granularity The granularity of the Amazon Web Services utillization data for your
 #' Savings Plans.
@@ -1503,6 +2276,21 @@ costexplorer_get_savings_plans_purchase_recommendation <- function(SavingsPlansT
 #' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html)
 #' object as the other operations, but only `AND` is supported among each
 #' dimension.
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The following values are supported for `Key`:
+#' 
+#' -   `UtilizationPercentage`
+#' 
+#' -   `TotalCommitment`
+#' 
+#' -   `UsedCommitment`
+#' 
+#' -   `UnusedCommitment`
+#' 
+#' -   `NetSavings`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
 #'
 #' @section Request syntax:
 #' ```
@@ -1521,12 +2309,12 @@ costexplorer_get_savings_plans_purchase_recommendation <- function(SavingsPlansT
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -1535,15 +2323,22 @@ costexplorer_get_savings_plans_purchase_recommendation <- function(SavingsPlansT
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
+#'   ),
+#'   SortBy = list(
+#'     Key = "string",
+#'     SortOrder = "ASCENDING"|"DESCENDING"
 #'   )
 #' )
 #' ```
@@ -1551,14 +2346,14 @@ costexplorer_get_savings_plans_purchase_recommendation <- function(SavingsPlansT
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_savings_plans_utilization
-costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity = NULL, Filter = NULL) {
+costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity = NULL, Filter = NULL, SortBy = NULL) {
   op <- new_operation(
     name = "GetSavingsPlansUtilization",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_savings_plans_utilization_input(TimePeriod = TimePeriod, Granularity = Granularity, Filter = Filter)
+  input <- .costexplorer$get_savings_plans_utilization_input(TimePeriod = TimePeriod, Granularity = Granularity, Filter = Filter, SortBy = SortBy)
   output <- .costexplorer$get_savings_plans_utilization_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -1571,9 +2366,10 @@ costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity =
 #' Retrieves attribute data along with aggregate utilization and savings
 #' data for a given time period
 #'
+#' @description
 #' Retrieves attribute data along with aggregate utilization and savings
-#' data for a given time period. This doesn\'t support granular or grouped
-#' data (daily/monthly) in response. You can\'t retrieve data by dates in a
+#' data for a given time period. This doesn't support granular or grouped
+#' data (daily/monthly) in response. You can't retrieve data by dates in a
 #' single response similar to `GetSavingsPlanUtilization`, but you have the
 #' option to make multiple calls to `GetSavingsPlanUtilizationDetails` by
 #' providing individual dates. You can use `GetDimensionValues` in
@@ -1584,11 +2380,11 @@ costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity =
 #'
 #' @usage
 #' costexplorer_get_savings_plans_utilization_details(TimePeriod, Filter,
-#'   NextToken, MaxResults)
+#'   DataType, NextToken, MaxResults, SortBy)
 #'
 #' @param TimePeriod &#91;required&#93; The time period that you want the usage and costs for. The `Start` date
 #' must be within 13 months. The `End` date must be after the `Start` date,
-#' and before the current date. Future dates can\'t be used as an `End`
+#' and before the current date. Future dates can't be used as an `End`
 #' date.
 #' @param Filter Filters Savings Plans utilization coverage data for active Savings Plans
 #' dimensions. You can filter data with the following dimensions:
@@ -1607,11 +2403,31 @@ costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity =
 #' [Expression](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html)
 #' object as the other operations, but only `AND` is supported among each
 #' dimension.
+#' @param DataType The data type.
 #' @param NextToken The token to retrieve the next set of results. Amazon Web Services
 #' provides the token when the response from a previous call has more
 #' results than the maximum page size.
 #' @param MaxResults The number of items to be returned in a response. The default is `20`,
 #' with a minimum value of `1`.
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The following values are supported for `Key`:
+#' 
+#' -   `UtilizationPercentage`
+#' 
+#' -   `TotalCommitment`
+#' 
+#' -   `UsedCommitment`
+#' 
+#' -   `UnusedCommitment`
+#' 
+#' -   `NetSavings`
+#' 
+#' -   `AmortizedRecurringCommitment`
+#' 
+#' -   `AmortizedUpfrontCommitment`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
 #'
 #' @section Request syntax:
 #' ```
@@ -1629,12 +2445,12 @@ costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity =
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -1643,32 +2459,42 @@ costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity =
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
+#'   DataType = list(
+#'     "ATTRIBUTES"|"UTILIZATION"|"AMORTIZED_COMMITMENT"|"SAVINGS"
+#'   ),
 #'   NextToken = "string",
-#'   MaxResults = 123
+#'   MaxResults = 123,
+#'   SortBy = list(
+#'     Key = "string",
+#'     SortOrder = "ASCENDING"|"DESCENDING"
+#'   )
 #' )
 #' ```
 #'
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_savings_plans_utilization_details
-costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filter = NULL, NextToken = NULL, MaxResults = NULL) {
+costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filter = NULL, DataType = NULL, NextToken = NULL, MaxResults = NULL, SortBy = NULL) {
   op <- new_operation(
     name = "GetSavingsPlansUtilizationDetails",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_savings_plans_utilization_details_input(TimePeriod = TimePeriod, Filter = Filter, NextToken = NextToken, MaxResults = MaxResults)
+  input <- .costexplorer$get_savings_plans_utilization_details_input(TimePeriod = TimePeriod, Filter = Filter, DataType = DataType, NextToken = NextToken, MaxResults = MaxResults, SortBy = SortBy)
   output <- .costexplorer$get_savings_plans_utilization_details_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -1680,11 +2506,13 @@ costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filte
 
 #' Queries for available tag keys and tag values for a specified period
 #'
+#' @description
 #' Queries for available tag keys and tag values for a specified period.
 #' You can search the tag values for an arbitrary string.
 #'
 #' @usage
-#' costexplorer_get_tags(SearchString, TimePeriod, TagKey, NextPageToken)
+#' costexplorer_get_tags(SearchString, TimePeriod, TagKey, Filter, SortBy,
+#'   MaxResults, NextPageToken)
 #'
 #' @param SearchString The value that you want to search for.
 #' @param TimePeriod &#91;required&#93; The start and end dates for retrieving the dimension values. The start
@@ -1693,6 +2521,34 @@ costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filte
 #' usage data is retrieved from `2017-01-01` up to and including
 #' `2017-04-30` but not including `2017-05-01`.
 #' @param TagKey The key of the tag that you want to return values for.
+#' @param Filter 
+#' @param SortBy The value by which you want to sort the data.
+#' 
+#' The key represents cost and usage metrics. The following values are
+#' supported:
+#' 
+#' -   `BlendedCost`
+#' 
+#' -   `UnblendedCost`
+#' 
+#' -   `AmortizedCost`
+#' 
+#' -   `NetAmortizedCost`
+#' 
+#' -   `NetUnblendedCost`
+#' 
+#' -   `UsageQuantity`
+#' 
+#' -   `NormalizedUsageAmount`
+#' 
+#' Supported values for `SortOrder` are `ASCENDING` or `DESCENDING`.
+#' 
+#' When using `SortBy`, `NextPageToken` and `SearchString` are not
+#' supported.
+#' @param MaxResults This field is only used when SortBy is provided in the request. The
+#' maximum number of objects that to be returned for this request. If
+#' MaxResults is not specified with SortBy, the request will return 1000
+#' results as the default value for this parameter.
 #' @param NextPageToken The token to retrieve the next set of results. AWS provides the token
 #' when the response from a previous call has more results than the maximum
 #' page size.
@@ -1706,6 +2562,49 @@ costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filte
 #'     End = "string"
 #'   ),
 #'   TagKey = "string",
+#'   Filter = list(
+#'     Or = list(
+#'       list()
+#'     ),
+#'     And = list(
+#'       list()
+#'     ),
+#'     Not = list(),
+#'     Dimensions = list(
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     Tags = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     ),
+#'     CostCategories = list(
+#'       Key = "string",
+#'       Values = list(
+#'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'       )
+#'     )
+#'   ),
+#'   SortBy = list(
+#'     list(
+#'       Key = "string",
+#'       SortOrder = "ASCENDING"|"DESCENDING"
+#'     )
+#'   ),
+#'   MaxResults = 123,
 #'   NextPageToken = "string"
 #' )
 #' ```
@@ -1713,14 +2612,14 @@ costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filte
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_tags
-costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL, NextPageToken = NULL) {
+costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL, Filter = NULL, SortBy = NULL, MaxResults = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetTags",
     http_method = "POST",
     http_path = "/",
     paginator = list()
   )
-  input <- .costexplorer$get_tags_input(SearchString = SearchString, TimePeriod = TimePeriod, TagKey = TagKey, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_tags_input(SearchString = SearchString, TimePeriod = TimePeriod, TagKey = TagKey, Filter = Filter, SortBy = SortBy, MaxResults = MaxResults, NextPageToken = NextPageToken)
   output <- .costexplorer$get_tags_output()
   config <- get_config()
   svc <- .costexplorer$service(config)
@@ -1734,6 +2633,7 @@ costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL
 #' will use over the forecast time period that you select, based on your
 #' past usage
 #'
+#' @description
 #' Retrieves a forecast for how much Amazon Web Services predicts that you
 #' will use over the forecast time period that you select, based on your
 #' past usage.
@@ -1747,7 +2647,8 @@ costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL
 #' exclusive. For example, if `start` is `2017-01-01` and `end` is
 #' `2017-05-01`, then the cost and usage data is retrieved from
 #' `2017-01-01` up to and including `2017-04-30` but not including
-#' `2017-05-01`.
+#' `2017-05-01`. The start date must be equal to or later than the current
+#' date to avoid a validation error.
 #' @param Metric &#91;required&#93; Which metric Cost Explorer uses to create your forecast.
 #' 
 #' Valid values for a `GetUsageForecast` call are the following:
@@ -1786,12 +2687,12 @@ costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL
 #'     ),
 #'     Not = list(),
 #'     Dimensions = list(
-#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'       Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'       Values = list(
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     Tags = list(
@@ -1800,13 +2701,16 @@ costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL
 #'         "string"
 #'       ),
 #'       MatchOptions = list(
-#'         "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     ),
 #'     CostCategories = list(
 #'       Key = "string",
 #'       Values = list(
 #'         "string"
+#'       ),
+#'       MatchOptions = list(
+#'         "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'       )
 #'     )
 #'   ),
@@ -1837,10 +2741,11 @@ costexplorer_get_usage_forecast <- function(TimePeriod, Metric, Granularity, Fil
 #' Returns the name, ARN, NumberOfRules and effective dates of all Cost
 #' Categories defined in the account
 #'
+#' @description
 #' Returns the name, ARN, `NumberOfRules` and effective dates of all Cost
 #' Categories defined in the account. You have the option to use
 #' `EffectiveOn` to return a list of Cost Categories that were active on a
-#' specific date. If there is no `EffectiveOn` specified, you'll see Cost
+#' specific date. If there is no `EffectiveOn` specified, you’ll see Cost
 #' Categories that are effective on the current date. If Cost Category is
 #' still effective, `EffectiveEnd` is omitted in the response.
 #' `ListCostCategoryDefinitions` supports pagination. The request can have
@@ -1885,11 +2790,149 @@ costexplorer_list_cost_category_definitions <- function(EffectiveOn = NULL, Next
 }
 .costexplorer$operations$list_cost_category_definitions <- costexplorer_list_cost_category_definitions
 
+#' Modifies the feedback property of a given cost anomaly
+#'
+#' @description
+#' Modifies the feedback property of a given cost anomaly.
+#'
+#' @usage
+#' costexplorer_provide_anomaly_feedback(AnomalyId, Feedback)
+#'
+#' @param AnomalyId &#91;required&#93; A cost anomaly ID.
+#' @param Feedback &#91;required&#93; Describes whether the cost anomaly was a planned activity or you
+#' considered it an anomaly.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$provide_anomaly_feedback(
+#'   AnomalyId = "string",
+#'   Feedback = "YES"|"NO"|"PLANNED_ACTIVITY"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_provide_anomaly_feedback
+costexplorer_provide_anomaly_feedback <- function(AnomalyId, Feedback) {
+  op <- new_operation(
+    name = "ProvideAnomalyFeedback",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$provide_anomaly_feedback_input(AnomalyId = AnomalyId, Feedback = Feedback)
+  output <- .costexplorer$provide_anomaly_feedback_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$provide_anomaly_feedback <- costexplorer_provide_anomaly_feedback
+
+#' Updates an existing cost anomaly monitor
+#'
+#' @description
+#' Updates an existing cost anomaly monitor. The changes made are applied
+#' going forward, and does not change anomalies detected in the past.
+#'
+#' @usage
+#' costexplorer_update_anomaly_monitor(MonitorArn, MonitorName)
+#'
+#' @param MonitorArn &#91;required&#93; Cost anomaly monitor Amazon Resource Names (ARNs).
+#' @param MonitorName The new name for the cost anomaly monitor.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$update_anomaly_monitor(
+#'   MonitorArn = "string",
+#'   MonitorName = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_update_anomaly_monitor
+costexplorer_update_anomaly_monitor <- function(MonitorArn, MonitorName = NULL) {
+  op <- new_operation(
+    name = "UpdateAnomalyMonitor",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$update_anomaly_monitor_input(MonitorArn = MonitorArn, MonitorName = MonitorName)
+  output <- .costexplorer$update_anomaly_monitor_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$update_anomaly_monitor <- costexplorer_update_anomaly_monitor
+
+#' Updates an existing cost anomaly monitor subscription
+#'
+#' @description
+#' Updates an existing cost anomaly monitor subscription.
+#'
+#' @usage
+#' costexplorer_update_anomaly_subscription(SubscriptionArn, Threshold,
+#'   Frequency, MonitorArnList, Subscribers, SubscriptionName)
+#'
+#' @param SubscriptionArn &#91;required&#93; A cost anomaly subscription Amazon Resource Name (ARN).
+#' @param Threshold The update to the threshold value for receiving notifications.
+#' @param Frequency The update to the frequency value at which subscribers will receive
+#' notifications.
+#' @param MonitorArnList A list of cost anomaly monitor ARNs.
+#' @param Subscribers The update to the subscriber list.
+#' @param SubscriptionName The subscription's new name.
+#'
+#' @section Request syntax:
+#' ```
+#' svc$update_anomaly_subscription(
+#'   SubscriptionArn = "string",
+#'   Threshold = 123.0,
+#'   Frequency = "DAILY"|"IMMEDIATE"|"WEEKLY",
+#'   MonitorArnList = list(
+#'     "string"
+#'   ),
+#'   Subscribers = list(
+#'     list(
+#'       Address = "string",
+#'       Type = "EMAIL"|"SNS",
+#'       Status = "CONFIRMED"|"DECLINED"
+#'     )
+#'   ),
+#'   SubscriptionName = "string"
+#' )
+#' ```
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_update_anomaly_subscription
+costexplorer_update_anomaly_subscription <- function(SubscriptionArn, Threshold = NULL, Frequency = NULL, MonitorArnList = NULL, Subscribers = NULL, SubscriptionName = NULL) {
+  op <- new_operation(
+    name = "UpdateAnomalySubscription",
+    http_method = "POST",
+    http_path = "/",
+    paginator = list()
+  )
+  input <- .costexplorer$update_anomaly_subscription_input(SubscriptionArn = SubscriptionArn, Threshold = Threshold, Frequency = Frequency, MonitorArnList = MonitorArnList, Subscribers = Subscribers, SubscriptionName = SubscriptionName)
+  output <- .costexplorer$update_anomaly_subscription_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$update_anomaly_subscription <- costexplorer_update_anomaly_subscription
+
 #' Updates an existing Cost Category
 #'
+#' @description
 #' Updates an existing Cost Category. Changes made to the Cost Category
-#' rules will be used to categorize the current month's expenses and future
-#' expenses. This won't change categorization for the previous months.
+#' rules will be used to categorize the current month’s expenses and future
+#' expenses. This won’t change categorization for the previous months.
 #'
 #' @usage
 #' costexplorer_update_cost_category_definition(CostCategoryArn,
@@ -1919,12 +2962,12 @@ costexplorer_list_cost_category_definitions <- function(EffectiveOn = NULL, Next
 #'         ),
 #'         Not = list(),
 #'         Dimensions = list(
-#'           Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION",
+#'           Key = "AZ"|"INSTANCE_TYPE"|"LINKED_ACCOUNT"|"LINKED_ACCOUNT_NAME"|"OPERATION"|"PURCHASE_TYPE"|"REGION"|"SERVICE"|"SERVICE_CODE"|"USAGE_TYPE"|"USAGE_TYPE_GROUP"|"RECORD_TYPE"|"OPERATING_SYSTEM"|"TENANCY"|"SCOPE"|"PLATFORM"|"SUBSCRIPTION_ID"|"LEGAL_ENTITY_NAME"|"DEPLOYMENT_OPTION"|"DATABASE_ENGINE"|"CACHE_ENGINE"|"INSTANCE_TYPE_FAMILY"|"BILLING_ENTITY"|"RESERVATION_ID"|"RESOURCE_ID"|"RIGHTSIZING_TYPE"|"SAVINGS_PLANS_TYPE"|"SAVINGS_PLAN_ARN"|"PAYMENT_OPTION"|"AGREEMENT_END_DATE_TIME_AFTER"|"AGREEMENT_END_DATE_TIME_BEFORE",
 #'           Values = list(
 #'             "string"
 #'           ),
 #'           MatchOptions = list(
-#'             "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'             "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'           )
 #'         ),
 #'         Tags = list(
@@ -1933,13 +2976,16 @@ costexplorer_list_cost_category_definitions <- function(EffectiveOn = NULL, Next
 #'             "string"
 #'           ),
 #'           MatchOptions = list(
-#'             "EQUALS"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+#'             "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'           )
 #'         ),
 #'         CostCategories = list(
 #'           Key = "string",
 #'           Values = list(
 #'             "string"
+#'           ),
+#'           MatchOptions = list(
+#'             "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
 #'           )
 #'         )
 #'       )
