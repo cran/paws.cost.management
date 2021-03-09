@@ -17,20 +17,21 @@ error.}
 \item{Metric}{[required] Which metric Cost Explorer uses to create your forecast. For more
 information about blended and unblended rates, see \href{https://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/}{Why does the "blended" annotation appear on some line items in my bill?}.
 
-Valid values for a \code{GetCostForecast} call are the following:
+Valid values for a \code{\link[=costexplorer_get_cost_forecast]{get_cost_forecast}}
+call are the following:
 \itemize{
-\item AMORTIZED\\_COST
-\item BLENDED\\_COST
-\item NET\\_AMORTIZED\\_COST
-\item NET\\_UNBLENDED\\_COST
-\item UNBLENDED\\_COST
+\item AMORTIZED_COST
+\item BLENDED_COST
+\item NET_AMORTIZED_COST
+\item NET_UNBLENDED_COST
+\item UNBLENDED_COST
 }}
 
 \item{Granularity}{[required] How granular you want the forecast to be. You can get 3 months of
 \code{DAILY} forecasts or 12 months of \code{MONTHLY} forecasts.
 
-The \code{GetCostForecast} operation supports only \code{DAILY} and \code{MONTHLY}
-granularities.}
+The \code{\link[=costexplorer_get_cost_forecast]{get_cost_forecast}} operation
+supports only \code{DAILY} and \code{MONTHLY} granularities.}
 
 \item{Filter}{The filters that you want to use to filter your forecast. Cost Explorer
 API supports all of the Cost Explorer filters.}
@@ -40,6 +41,26 @@ can request a prediction interval around the mean by specifying a
 confidence level. The higher the confidence level, the more confident
 Cost Explorer is about the actual value falling in the prediction
 interval. Higher confidence levels result in wider prediction intervals.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  Total = list(
+    Amount = "string",
+    Unit = "string"
+  ),
+  ForecastResultsByTime = list(
+    list(
+      TimePeriod = list(
+        Start = "string",
+        End = "string"
+      ),
+      MeanValue = "string",
+      PredictionIntervalLowerBound = "string",
+      PredictionIntervalUpperBound = "string"
+    )
+  )
+)
+}
 }
 \description{
 Retrieves a forecast for how much Amazon Web Services predicts that you

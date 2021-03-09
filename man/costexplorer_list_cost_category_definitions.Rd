@@ -17,6 +17,30 @@ results than the maximum page size.}
 
 \item{MaxResults}{The number of entries a paginated response contains.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  CostCategoryReferences = list(
+    list(
+      CostCategoryArn = "string",
+      Name = "string",
+      EffectiveStart = "string",
+      EffectiveEnd = "string",
+      NumberOfRules = 123,
+      ProcessingStatus = list(
+        list(
+          Component = "COST_EXPLORER",
+          Status = "PROCESSING"|"APPLIED"
+        )
+      ),
+      Values = list(
+        "string"
+      )
+    )
+  ),
+  NextToken = "string"
+)
+}
+}
 \description{
 Returns the name, ARN, \code{NumberOfRules} and effective dates of all Cost
 Categories defined in the account. You have the option to use
@@ -24,8 +48,9 @@ Categories defined in the account. You have the option to use
 specific date. If there is no \code{EffectiveOn} specified, you’ll see Cost
 Categories that are effective on the current date. If Cost Category is
 still effective, \code{EffectiveEnd} is omitted in the response.
-\code{ListCostCategoryDefinitions} supports pagination. The request can have
-a \code{MaxResults} range up to 100.
+\code{\link[=costexplorer_list_cost_category_definitions]{list_cost_category_definitions}}
+supports pagination. The request can have a \code{MaxResults} range up to
+100.
 }
 \section{Request syntax}{
 \preformatted{svc$list_cost_category_definitions(

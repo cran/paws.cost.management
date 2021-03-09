@@ -40,7 +40,8 @@ measured in different units (for example, hours vs. GB). To get more
 meaningful \code{UsageQuantity} metrics, filter by \code{UsageType} or
 \code{UsageTypeGroups}.
 
-\code{Metrics} is required for \code{GetCostAndUsage} requests.}
+\code{Metrics} is required for
+\code{\link[=costexplorer_get_cost_and_usage]{get_cost_and_usage}} requests.}
 
 \item{GroupBy}{You can group AWS costs using up to two different groups, either
 dimensions, tag keys, cost categories, or any two group by types.
@@ -56,14 +57,61 @@ Valid values are \code{AZ}, \code{INSTANCE_TYPE}, \code{LEGAL_ENTITY_NAME},
 when the response from a previous call has more results than the maximum
 page size.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  NextPageToken = "string",
+  GroupDefinitions = list(
+    list(
+      Type = "DIMENSION"|"TAG"|"COST_CATEGORY",
+      Key = "string"
+    )
+  ),
+  ResultsByTime = list(
+    list(
+      TimePeriod = list(
+        Start = "string",
+        End = "string"
+      ),
+      Total = list(
+        list(
+          Amount = "string",
+          Unit = "string"
+        )
+      ),
+      Groups = list(
+        list(
+          Keys = list(
+            "string"
+          ),
+          Metrics = list(
+            list(
+              Amount = "string",
+              Unit = "string"
+            )
+          )
+        )
+      ),
+      Estimated = TRUE|FALSE
+    )
+  ),
+  DimensionValueAttributes = list(
+    list(
+      Value = "string",
+      Attributes = list(
+        "string"
+      )
+    )
+  )
+)
+}
+}
 \description{
 Retrieves cost and usage metrics for your account. You can specify which
 cost and usage-related metric, such as \code{BlendedCosts} or
 \code{UsageQuantity}, that you want the request to return. You can also
 filter and group your data by various dimensions, such as \code{SERVICE} or
 \code{AZ}, in a specific time range. For a complete list of valid dimensions,
-see the
-\href{https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html}{GetDimensionValues}
+see the \code{\link[=costexplorer_get_dimension_values]{get_dimension_values}}
 operation. Management account in an organization in AWS Organizations
 have access to all member accounts.
 

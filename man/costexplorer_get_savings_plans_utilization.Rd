@@ -17,8 +17,9 @@ date.}
 \item{Granularity}{The granularity of the Amazon Web Services utillization data for your
 Savings Plans.
 
-The \code{GetSavingsPlansUtilization} operation supports only \code{DAILY} and
-\code{MONTHLY} granularities.}
+The
+\code{\link[=costexplorer_get_savings_plans_utilization]{get_savings_plans_utilization}}
+operation supports only \code{DAILY} and \code{MONTHLY} granularities.}
 
 \item{Filter}{Filters Savings Plans utilization coverage data for active Savings Plans
 dimensions. You can filter data with the following dimensions:
@@ -31,7 +32,8 @@ dimensions. You can filter data with the following dimensions:
 \item \code{INSTANCE_TYPE_FAMILY}
 }
 
-\code{GetSavingsPlansUtilization} uses the same
+\code{\link[=costexplorer_get_savings_plans_utilization]{get_savings_plans_utilization}}
+uses the same
 \href{https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Expression.html}{Expression}
 object as the other operations, but only \code{AND} is supported among each
 dimension.}
@@ -49,15 +51,60 @@ The following values are supported for \code{Key}:
 
 Supported values for \code{SortOrder} are \code{ASCENDING} or \code{DESCENDING}.}
 }
+\value{
+A list with the following syntax:\preformatted{list(
+  SavingsPlansUtilizationsByTime = list(
+    list(
+      TimePeriod = list(
+        Start = "string",
+        End = "string"
+      ),
+      Utilization = list(
+        TotalCommitment = "string",
+        UsedCommitment = "string",
+        UnusedCommitment = "string",
+        UtilizationPercentage = "string"
+      ),
+      Savings = list(
+        NetSavings = "string",
+        OnDemandCostEquivalent = "string"
+      ),
+      AmortizedCommitment = list(
+        AmortizedRecurringCommitment = "string",
+        AmortizedUpfrontCommitment = "string",
+        TotalAmortizedCommitment = "string"
+      )
+    )
+  ),
+  Total = list(
+    Utilization = list(
+      TotalCommitment = "string",
+      UsedCommitment = "string",
+      UnusedCommitment = "string",
+      UtilizationPercentage = "string"
+    ),
+    Savings = list(
+      NetSavings = "string",
+      OnDemandCostEquivalent = "string"
+    ),
+    AmortizedCommitment = list(
+      AmortizedRecurringCommitment = "string",
+      AmortizedUpfrontCommitment = "string",
+      TotalAmortizedCommitment = "string"
+    )
+  )
+)
+}
+}
 \description{
 Retrieves the Savings Plans utilization for your account across date
 ranges with daily or monthly granularity. Management account in an
 organization have access to member accounts. You can use
-\code{GetDimensionValues} in \code{SAVINGS_PLANS} to determine the possible
-dimension values.
+\code{\link[=costexplorer_get_dimension_values]{get_dimension_values}} in
+\code{SAVINGS_PLANS} to determine the possible dimension values.
 
 You cannot group by any dimension values for
-\code{GetSavingsPlansUtilization}.
+\code{\link[=costexplorer_get_savings_plans_utilization]{get_savings_plans_utilization}}.
 }
 \section{Request syntax}{
 \preformatted{svc$get_savings_plans_utilization(

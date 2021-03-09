@@ -11,8 +11,8 @@ pricing_describe_services(ServiceCode, FormatVersion, NextToken,
 \arguments{
 \item{ServiceCode}{The code for the service whose information you want to retrieve, such as
 \code{AmazonEC2}. You can use the \code{ServiceCode} to filter the results in a
-\code{GetProducts} call. To retrieve a list of all services, leave this
-blank.}
+\code{\link[=pricing_get_products]{get_products}} call. To retrieve a list of all
+services, leave this blank.}
 
 \item{FormatVersion}{The format version that you want the response to be in.
 
@@ -22,6 +22,21 @@ Valid values are: \code{aws_v1}}
 want to retrieve.}
 
 \item{MaxResults}{The maximum number of results that you want returned in the response.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  Services = list(
+    list(
+      ServiceCode = "string",
+      AttributeNames = list(
+        "string"
+      )
+    )
+  ),
+  FormatVersion = "string",
+  NextToken = "string"
+)
+}
 }
 \description{
 Returns the metadata for one service or a list of the metadata for all

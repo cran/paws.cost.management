@@ -18,13 +18,130 @@ view your estimated savings associated with recommendations with
 consideration of existing Savings Plans or RI benefits, or neither.}
 
 \item{Service}{[required] The specific service that you want recommendations for. The only valid
-value for \code{GetRightsizingRecommendation} is "\code{AmazonEC2}".}
+value for
+\code{\link[=costexplorer_get_rightsizing_recommendation]{get_rightsizing_recommendation}}
+is "\code{AmazonEC2}".}
 
 \item{PageSize}{The number of recommendations that you want returned in a single
 response object.}
 
 \item{NextPageToken}{The pagination token that indicates the next set of results that you
 want to retrieve.}
+}
+\value{
+A list with the following syntax:\preformatted{list(
+  Metadata = list(
+    RecommendationId = "string",
+    GenerationTimestamp = "string",
+    LookbackPeriodInDays = "SEVEN_DAYS"|"THIRTY_DAYS"|"SIXTY_DAYS",
+    AdditionalMetadata = "string"
+  ),
+  Summary = list(
+    TotalRecommendationCount = "string",
+    EstimatedTotalMonthlySavingsAmount = "string",
+    SavingsCurrencyCode = "string",
+    SavingsPercentage = "string"
+  ),
+  RightsizingRecommendations = list(
+    list(
+      AccountId = "string",
+      CurrentInstance = list(
+        ResourceId = "string",
+        InstanceName = "string",
+        Tags = list(
+          list(
+            Key = "string",
+            Values = list(
+              "string"
+            ),
+            MatchOptions = list(
+              "EQUALS"|"ABSENT"|"STARTS_WITH"|"ENDS_WITH"|"CONTAINS"|"CASE_SENSITIVE"|"CASE_INSENSITIVE"
+            )
+          )
+        ),
+        ResourceDetails = list(
+          EC2ResourceDetails = list(
+            HourlyOnDemandRate = "string",
+            InstanceType = "string",
+            Platform = "string",
+            Region = "string",
+            Sku = "string",
+            Memory = "string",
+            NetworkPerformance = "string",
+            Storage = "string",
+            Vcpu = "string"
+          )
+        ),
+        ResourceUtilization = list(
+          EC2ResourceUtilization = list(
+            MaxCpuUtilizationPercentage = "string",
+            MaxMemoryUtilizationPercentage = "string",
+            MaxStorageUtilizationPercentage = "string",
+            EBSResourceUtilization = list(
+              EbsReadOpsPerSecond = "string",
+              EbsWriteOpsPerSecond = "string",
+              EbsReadBytesPerSecond = "string",
+              EbsWriteBytesPerSecond = "string"
+            )
+          )
+        ),
+        ReservationCoveredHoursInLookbackPeriod = "string",
+        SavingsPlansCoveredHoursInLookbackPeriod = "string",
+        OnDemandHoursInLookbackPeriod = "string",
+        TotalRunningHoursInLookbackPeriod = "string",
+        MonthlyCost = "string",
+        CurrencyCode = "string"
+      ),
+      RightsizingType = "TERMINATE"|"MODIFY",
+      ModifyRecommendationDetail = list(
+        TargetInstances = list(
+          list(
+            EstimatedMonthlyCost = "string",
+            EstimatedMonthlySavings = "string",
+            CurrencyCode = "string",
+            DefaultTargetInstance = TRUE|FALSE,
+            ResourceDetails = list(
+              EC2ResourceDetails = list(
+                HourlyOnDemandRate = "string",
+                InstanceType = "string",
+                Platform = "string",
+                Region = "string",
+                Sku = "string",
+                Memory = "string",
+                NetworkPerformance = "string",
+                Storage = "string",
+                Vcpu = "string"
+              )
+            ),
+            ExpectedResourceUtilization = list(
+              EC2ResourceUtilization = list(
+                MaxCpuUtilizationPercentage = "string",
+                MaxMemoryUtilizationPercentage = "string",
+                MaxStorageUtilizationPercentage = "string",
+                EBSResourceUtilization = list(
+                  EbsReadOpsPerSecond = "string",
+                  EbsWriteOpsPerSecond = "string",
+                  EbsReadBytesPerSecond = "string",
+                  EbsWriteBytesPerSecond = "string"
+                )
+              )
+            )
+          )
+        )
+      ),
+      TerminateRecommendationDetail = list(
+        EstimatedMonthlySavings = "string",
+        CurrencyCode = "string"
+      )
+    )
+  ),
+  NextPageToken = "string",
+  Configuration = list(
+    RecommendationTarget = "SAME_INSTANCE_FAMILY"|"CROSS_INSTANCE_FAMILY",
+    BenefitsConsidered = TRUE|FALSE
+  )
+)
+}
 }
 \description{
 Creates recommendations that help you save cost by identifying idle and

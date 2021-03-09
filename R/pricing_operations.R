@@ -21,14 +21,31 @@ NULL
 #'
 #' @param ServiceCode The code for the service whose information you want to retrieve, such as
 #' `AmazonEC2`. You can use the `ServiceCode` to filter the results in a
-#' `GetProducts` call. To retrieve a list of all services, leave this
-#' blank.
+#' [`get_products`][pricing_get_products] call. To retrieve a list of all
+#' services, leave this blank.
 #' @param FormatVersion The format version that you want the response to be in.
 #' 
 #' Valid values are: `aws_v1`
 #' @param NextToken The pagination token that indicates the next set of results that you
 #' want to retrieve.
 #' @param MaxResults The maximum number of results that you want returned in the response.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   Services = list(
+#'     list(
+#'       ServiceCode = "string",
+#'       AttributeNames = list(
+#'         "string"
+#'       )
+#'     )
+#'   ),
+#'   FormatVersion = "string",
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
@@ -92,6 +109,19 @@ pricing_describe_services <- function(ServiceCode = NULL, FormatVersion = NULL, 
 #' want to retrieve.
 #' @param MaxResults The maximum number of results to return in response.
 #'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   AttributeValues = list(
+#'     list(
+#'       Value = "string"
+#'     )
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
+#'
 #' @section Request syntax:
 #' ```
 #' svc$get_attribute_values(
@@ -151,6 +181,18 @@ pricing_get_attribute_values <- function(ServiceCode, AttributeName, NextToken =
 #' @param NextToken The pagination token that indicates the next set of results that you
 #' want to retrieve.
 #' @param MaxResults The maximum number of results to return in the response.
+#'
+#' @return
+#' A list with the following syntax:
+#' ```
+#' list(
+#'   FormatVersion = "string",
+#'   PriceList = list(
+#'     "string"
+#'   ),
+#'   NextToken = "string"
+#' )
+#' ```
 #'
 #' @section Request syntax:
 #' ```
