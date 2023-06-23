@@ -30,7 +30,7 @@ Services charges for a billing group.}
 
 \item{PrimaryAccountId}{The account ID that serves as the main account in a billing group.}
 
-\item{Description}{The billing group description.}
+\item{Description}{The description of the billing group.}
 
 \item{Tags}{A map that contains tag keys and tag values that are attached to a
 billing group. This feature isn't available during the beta.}
@@ -38,6 +38,6 @@ billing group. This feature isn't available during the beta.}
 \description{
 Creates a billing group that resembles a consolidated billing family that Amazon Web Services charges, based off of the predefined pricing plan computation.
 
-See \url{https://paws-r.github.io/docs/billingconductor/create_billing_group.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/billingconductor_create_billing_group/} for full documentation.
 }
 \keyword{internal}

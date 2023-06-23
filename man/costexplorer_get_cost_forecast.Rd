@@ -20,7 +20,8 @@ must be equal to or no later than the current date to avoid a validation
 error.}
 
 \item{Metric}{[required] Which metric Cost Explorer uses to create your forecast. For more
-information about blended and unblended rates, see \href{https://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/}{Why does the "blended" annotation appear on some line items in my bill?}.
+information about blended and unblended rates, see Why does the
+"blended" annotation appear on some line items in my bill?.
 
 Valid values for a \code{\link[=costexplorer_get_cost_forecast]{get_cost_forecast}}
 call are the following:
@@ -76,6 +77,6 @@ interval. Higher confidence levels result in wider prediction intervals.}
 \description{
 Retrieves a forecast for how much Amazon Web Services predicts that you will spend over the forecast time period that you select, based on your past costs.
 
-See \url{https://paws-r.github.io/docs/costexplorer/get_cost_forecast.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/costexplorer_get_cost_forecast/} for full documentation.
 }
 \keyword{internal}

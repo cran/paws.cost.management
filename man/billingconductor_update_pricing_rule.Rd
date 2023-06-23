@@ -9,7 +9,8 @@ billingconductor_update_pricing_rule(
   Name = NULL,
   Description = NULL,
   Type = NULL,
-  ModifierPercentage = NULL
+  ModifierPercentage = NULL,
+  Tiering = NULL
 )
 }
 \arguments{
@@ -23,10 +24,12 @@ pricing rule.}
 \item{Type}{The new pricing rule type.}
 
 \item{ModifierPercentage}{The new modifier to show pricing plan rates as a percentage.}
+
+\item{Tiering}{The set of tiering configurations for the pricing rule.}
 }
 \description{
 Updates an existing pricing rule.
 
-See \url{https://paws-r.github.io/docs/billingconductor/update_pricing_rule.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/billingconductor_update_pricing_rule/} for full documentation.
 }
 \keyword{internal}

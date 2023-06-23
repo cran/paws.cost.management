@@ -48,7 +48,8 @@ Valid values for \code{MatchOptions} for \code{CostCategories} and \code{Tags} a
 and \code{CASE_SENSITIVE}.}
 
 \item{Metrics}{Which metrics are returned in the query. For more information about
-blended and unblended rates, see \href{https://aws.amazon.com/premiumsupport/knowledge-center/blended-rates-intro/}{Why does the "blended" annotation appear on some line items in my bill?}.
+blended and unblended rates, see Why does the "blended" annotation
+appear on some line items in my bill?.
 
 Valid values are \code{AmortizedCost}, \code{BlendedCost}, \code{NetAmortizedCost},
 \code{NetUnblendedCost}, \code{NormalizedUsageAmount}, \code{UnblendedCost}, and
@@ -76,6 +77,6 @@ results than the maximum page size.}
 \description{
 Retrieves cost and usage metrics with resources for your account. You can specify which cost and usage-related metric, such as \code{BlendedCosts} or \code{UsageQuantity}, that you want the request to return. You can also filter and group your data by various dimensions, such as \code{SERVICE} or \code{AZ}, in a specific time range. For a complete list of valid dimensions, see the \code{\link[=costexplorer_get_dimension_values]{get_dimension_values}} operation. Management account in an organization in Organizations have access to all member accounts. This API is currently available for the Amazon Elastic Compute Cloud – Compute service only.
 
-See \url{https://paws-r.github.io/docs/costexplorer/get_cost_and_usage_with_resources.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage_with_resources/} for full documentation.
 }
 \keyword{internal}

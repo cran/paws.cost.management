@@ -8,7 +8,7 @@ NULL
 #' @description
 #' Used to cancel an open change request. Must be sent before the status of the request changes to `APPLYING`, the final stage of completing your change request. You can describe a change during the 60-day request history retention period for API calls.
 #'
-#' See [https://paws-r.github.io/docs/marketplacecatalog/cancel_change_set.html](https://paws-r.github.io/docs/marketplacecatalog/cancel_change_set.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_cancel_change_set/](https://www.paws-r-sdk.com/docs/marketplacecatalog_cancel_change_set/) for full documentation.
 #'
 #' @param Catalog &#91;required&#93; Required. The catalog related to the request. Fixed value:
 #' `AWSMarketplace`.
@@ -36,12 +36,43 @@ marketplacecatalog_cancel_change_set <- function(Catalog, ChangeSetId) {
 }
 .marketplacecatalog$operations$cancel_change_set <- marketplacecatalog_cancel_change_set
 
+#' Deletes a resource-based policy on an Entity that is identified by its
+#' resource ARN
+#'
+#' @description
+#' Deletes a resource-based policy on an Entity that is identified by its resource ARN.
+#'
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_delete_resource_policy/](https://www.paws-r-sdk.com/docs/marketplacecatalog_delete_resource_policy/) for full documentation.
+#'
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the Entity resource that is associated
+#' with the resource policy.
+#'
+#' @keywords internal
+#'
+#' @rdname marketplacecatalog_delete_resource_policy
+marketplacecatalog_delete_resource_policy <- function(ResourceArn) {
+  op <- new_operation(
+    name = "DeleteResourcePolicy",
+    http_method = "DELETE",
+    http_path = "/DeleteResourcePolicy",
+    paginator = list()
+  )
+  input <- .marketplacecatalog$delete_resource_policy_input(ResourceArn = ResourceArn)
+  output <- .marketplacecatalog$delete_resource_policy_output()
+  config <- get_config()
+  svc <- .marketplacecatalog$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.marketplacecatalog$operations$delete_resource_policy <- marketplacecatalog_delete_resource_policy
+
 #' Provides information about a given change set
 #'
 #' @description
 #' Provides information about a given change set.
 #'
-#' See [https://paws-r.github.io/docs/marketplacecatalog/describe_change_set.html](https://paws-r.github.io/docs/marketplacecatalog/describe_change_set.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_describe_change_set/](https://www.paws-r-sdk.com/docs/marketplacecatalog_describe_change_set/) for full documentation.
 #'
 #' @param Catalog &#91;required&#93; Required. The catalog related to the request. Fixed value:
 #' `AWSMarketplace`
@@ -74,7 +105,7 @@ marketplacecatalog_describe_change_set <- function(Catalog, ChangeSetId) {
 #' @description
 #' Returns the metadata and content of the entity.
 #'
-#' See [https://paws-r.github.io/docs/marketplacecatalog/describe_entity.html](https://paws-r.github.io/docs/marketplacecatalog/describe_entity.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_describe_entity/](https://www.paws-r-sdk.com/docs/marketplacecatalog_describe_entity/) for full documentation.
 #'
 #' @param Catalog &#91;required&#93; Required. The catalog related to the request. Fixed value:
 #' `AWSMarketplace`
@@ -100,13 +131,44 @@ marketplacecatalog_describe_entity <- function(Catalog, EntityId) {
 }
 .marketplacecatalog$operations$describe_entity <- marketplacecatalog_describe_entity
 
+#' Gets a resource-based policy of an Entity that is identified by its
+#' resource ARN
+#'
+#' @description
+#' Gets a resource-based policy of an Entity that is identified by its resource ARN.
+#'
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_get_resource_policy/](https://www.paws-r-sdk.com/docs/marketplacecatalog_get_resource_policy/) for full documentation.
+#'
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the Entity resource that is associated
+#' with the resource policy.
+#'
+#' @keywords internal
+#'
+#' @rdname marketplacecatalog_get_resource_policy
+marketplacecatalog_get_resource_policy <- function(ResourceArn) {
+  op <- new_operation(
+    name = "GetResourcePolicy",
+    http_method = "GET",
+    http_path = "/GetResourcePolicy",
+    paginator = list()
+  )
+  input <- .marketplacecatalog$get_resource_policy_input(ResourceArn = ResourceArn)
+  output <- .marketplacecatalog$get_resource_policy_output()
+  config <- get_config()
+  svc <- .marketplacecatalog$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.marketplacecatalog$operations$get_resource_policy <- marketplacecatalog_get_resource_policy
+
 #' Returns the list of change sets owned by the account being used to make
 #' the call
 #'
 #' @description
 #' Returns the list of change sets owned by the account being used to make the call. You can filter this list by providing any combination of `entityId`, `ChangeSetName`, and status. If you provide more than one filter, the API operation applies a logical AND between the filters.
 #'
-#' See [https://paws-r.github.io/docs/marketplacecatalog/list_change_sets.html](https://paws-r.github.io/docs/marketplacecatalog/list_change_sets.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_list_change_sets/](https://www.paws-r-sdk.com/docs/marketplacecatalog_list_change_sets/) for full documentation.
 #'
 #' @param Catalog &#91;required&#93; The catalog related to the request. Fixed value: `AWSMarketplace`
 #' @param FilterList An array of filter objects.
@@ -142,7 +204,7 @@ marketplacecatalog_list_change_sets <- function(Catalog, FilterList = NULL, Sort
 #' @description
 #' Provides the list of entities of a given type.
 #'
-#' See [https://paws-r.github.io/docs/marketplacecatalog/list_entities.html](https://paws-r.github.io/docs/marketplacecatalog/list_entities.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_list_entities/](https://www.paws-r-sdk.com/docs/marketplacecatalog_list_entities/) for full documentation.
 #'
 #' @param Catalog &#91;required&#93; The catalog related to the request. Fixed value: `AWSMarketplace`
 #' @param EntityType &#91;required&#93; The type of entities to retrieve.
@@ -153,18 +215,19 @@ marketplacecatalog_list_change_sets <- function(Catalog, FilterList = NULL, Sort
 #' results.
 #' @param MaxResults Specifies the upper limit of the elements on a single page. If a value
 #' isn't provided, the default value is 20.
+#' @param OwnershipType 
 #'
 #' @keywords internal
 #'
 #' @rdname marketplacecatalog_list_entities
-marketplacecatalog_list_entities <- function(Catalog, EntityType, FilterList = NULL, Sort = NULL, NextToken = NULL, MaxResults = NULL) {
+marketplacecatalog_list_entities <- function(Catalog, EntityType, FilterList = NULL, Sort = NULL, NextToken = NULL, MaxResults = NULL, OwnershipType = NULL) {
   op <- new_operation(
     name = "ListEntities",
     http_method = "POST",
     http_path = "/ListEntities",
     paginator = list()
   )
-  input <- .marketplacecatalog$list_entities_input(Catalog = Catalog, EntityType = EntityType, FilterList = FilterList, Sort = Sort, NextToken = NextToken, MaxResults = MaxResults)
+  input <- .marketplacecatalog$list_entities_input(Catalog = Catalog, EntityType = EntityType, FilterList = FilterList, Sort = Sort, NextToken = NextToken, MaxResults = MaxResults, OwnershipType = OwnershipType)
   output <- .marketplacecatalog$list_entities_output()
   config <- get_config()
   svc <- .marketplacecatalog$service(config)
@@ -174,30 +237,94 @@ marketplacecatalog_list_entities <- function(Catalog, EntityType, FilterList = N
 }
 .marketplacecatalog$operations$list_entities <- marketplacecatalog_list_entities
 
-#' This operation allows you to request changes for your entities
+#' Lists all tags that have been added to a resource (either an entity or
+#' change set)
 #'
 #' @description
-#' This operation allows you to request changes for your entities. Within a single ChangeSet, you cannot start the same change type against the same entity multiple times. Additionally, when a ChangeSet is running, all the entities targeted by the different changes are locked until the ChangeSet has completed (either succeeded, cancelled, or failed). If you try to start a ChangeSet containing a change against an entity that is already locked, you will receive a `ResourceInUseException`.
+#' Lists all tags that have been added to a resource (either an [entity](https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities) or [change set](https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets)).
 #'
-#' See [https://paws-r.github.io/docs/marketplacecatalog/start_change_set.html](https://paws-r.github.io/docs/marketplacecatalog/start_change_set.html) for full documentation.
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_list_tags_for_resource/](https://www.paws-r-sdk.com/docs/marketplacecatalog_list_tags_for_resource/) for full documentation.
+#'
+#' @param ResourceArn &#91;required&#93; Required. The Amazon Resource Name (ARN) associated with the resource
+#' you want to list tags on.
+#'
+#' @keywords internal
+#'
+#' @rdname marketplacecatalog_list_tags_for_resource
+marketplacecatalog_list_tags_for_resource <- function(ResourceArn) {
+  op <- new_operation(
+    name = "ListTagsForResource",
+    http_method = "POST",
+    http_path = "/ListTagsForResource",
+    paginator = list()
+  )
+  input <- .marketplacecatalog$list_tags_for_resource_input(ResourceArn = ResourceArn)
+  output <- .marketplacecatalog$list_tags_for_resource_output()
+  config <- get_config()
+  svc <- .marketplacecatalog$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.marketplacecatalog$operations$list_tags_for_resource <- marketplacecatalog_list_tags_for_resource
+
+#' Attaches a resource-based policy to an Entity
+#'
+#' @description
+#' Attaches a resource-based policy to an Entity. Examples of an entity include: `AmiProduct` and `ContainerProduct`.
+#'
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_put_resource_policy/](https://www.paws-r-sdk.com/docs/marketplacecatalog_put_resource_policy/) for full documentation.
+#'
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the Entity resource you want to
+#' associate with a resource policy.
+#' @param Policy &#91;required&#93; The policy document to set; formatted in JSON.
+#'
+#' @keywords internal
+#'
+#' @rdname marketplacecatalog_put_resource_policy
+marketplacecatalog_put_resource_policy <- function(ResourceArn, Policy) {
+  op <- new_operation(
+    name = "PutResourcePolicy",
+    http_method = "POST",
+    http_path = "/PutResourcePolicy",
+    paginator = list()
+  )
+  input <- .marketplacecatalog$put_resource_policy_input(ResourceArn = ResourceArn, Policy = Policy)
+  output <- .marketplacecatalog$put_resource_policy_output()
+  config <- get_config()
+  svc <- .marketplacecatalog$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.marketplacecatalog$operations$put_resource_policy <- marketplacecatalog_put_resource_policy
+
+#' Allows you to request changes for your entities
+#'
+#' @description
+#' Allows you to request changes for your entities. Within a single `ChangeSet`, you can't start the same change type against the same entity multiple times. Additionally, when a `ChangeSet` is running, all the entities targeted by the different changes are locked until the change set has completed (either succeeded, cancelled, or failed). If you try to start a change set containing a change against an entity that is already locked, you will receive a `ResourceInUseException` error.
+#'
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_start_change_set/](https://www.paws-r-sdk.com/docs/marketplacecatalog_start_change_set/) for full documentation.
 #'
 #' @param Catalog &#91;required&#93; The catalog related to the request. Fixed value: `AWSMarketplace`
 #' @param ChangeSet &#91;required&#93; Array of `change` object.
 #' @param ChangeSetName Optional case sensitive string of up to 100 ASCII characters. The change
 #' set name can be used to filter the list of change sets.
 #' @param ClientRequestToken A unique token to identify the request to ensure idempotency.
+#' @param ChangeSetTags A list of objects specifying each key name and value for the
+#' `ChangeSetTags` property.
 #'
 #' @keywords internal
 #'
 #' @rdname marketplacecatalog_start_change_set
-marketplacecatalog_start_change_set <- function(Catalog, ChangeSet, ChangeSetName = NULL, ClientRequestToken = NULL) {
+marketplacecatalog_start_change_set <- function(Catalog, ChangeSet, ChangeSetName = NULL, ClientRequestToken = NULL, ChangeSetTags = NULL) {
   op <- new_operation(
     name = "StartChangeSet",
     http_method = "POST",
     http_path = "/StartChangeSet",
     paginator = list()
   )
-  input <- .marketplacecatalog$start_change_set_input(Catalog = Catalog, ChangeSet = ChangeSet, ChangeSetName = ChangeSetName, ClientRequestToken = ClientRequestToken)
+  input <- .marketplacecatalog$start_change_set_input(Catalog = Catalog, ChangeSet = ChangeSet, ChangeSetName = ChangeSetName, ClientRequestToken = ClientRequestToken, ChangeSetTags = ChangeSetTags)
   output <- .marketplacecatalog$start_change_set_output()
   config <- get_config()
   svc <- .marketplacecatalog$service(config)
@@ -206,3 +333,68 @@ marketplacecatalog_start_change_set <- function(Catalog, ChangeSet, ChangeSetNam
   return(response)
 }
 .marketplacecatalog$operations$start_change_set <- marketplacecatalog_start_change_set
+
+#' Tags a resource (either an entity or change set)
+#'
+#' @description
+#' Tags a resource (either an [entity](https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities) or [change set](https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets)).
+#'
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_tag_resource/](https://www.paws-r-sdk.com/docs/marketplacecatalog_tag_resource/) for full documentation.
+#'
+#' @param ResourceArn &#91;required&#93; Required. The Amazon Resource Name (ARN) associated with the resource
+#' you want to tag.
+#' @param Tags &#91;required&#93; Required. A list of objects specifying each key name and value. Number
+#' of objects allowed: 1-50.
+#'
+#' @keywords internal
+#'
+#' @rdname marketplacecatalog_tag_resource
+marketplacecatalog_tag_resource <- function(ResourceArn, Tags) {
+  op <- new_operation(
+    name = "TagResource",
+    http_method = "POST",
+    http_path = "/TagResource",
+    paginator = list()
+  )
+  input <- .marketplacecatalog$tag_resource_input(ResourceArn = ResourceArn, Tags = Tags)
+  output <- .marketplacecatalog$tag_resource_output()
+  config <- get_config()
+  svc <- .marketplacecatalog$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.marketplacecatalog$operations$tag_resource <- marketplacecatalog_tag_resource
+
+#' Removes a tag or list of tags from a resource (either an entity or
+#' change set)
+#'
+#' @description
+#' Removes a tag or list of tags from a resource (either an [entity](https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#catalog-api-entities) or [change set](https://docs.aws.amazon.com/marketplace-catalog/latest/api-reference/welcome.html#working-with-change-sets)).
+#'
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_untag_resource/](https://www.paws-r-sdk.com/docs/marketplacecatalog_untag_resource/) for full documentation.
+#'
+#' @param ResourceArn &#91;required&#93; Required. The Amazon Resource Name (ARN) associated with the resource
+#' you want to remove the tag from.
+#' @param TagKeys &#91;required&#93; Required. A list of key names of tags to be removed. Number of strings
+#' allowed: 0-256.
+#'
+#' @keywords internal
+#'
+#' @rdname marketplacecatalog_untag_resource
+marketplacecatalog_untag_resource <- function(ResourceArn, TagKeys) {
+  op <- new_operation(
+    name = "UntagResource",
+    http_method = "POST",
+    http_path = "/UntagResource",
+    paginator = list()
+  )
+  input <- .marketplacecatalog$untag_resource_input(ResourceArn = ResourceArn, TagKeys = TagKeys)
+  output <- .marketplacecatalog$untag_resource_output()
+  config <- get_config()
+  svc <- .marketplacecatalog$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.marketplacecatalog$operations$untag_resource <- marketplacecatalog_untag_resource

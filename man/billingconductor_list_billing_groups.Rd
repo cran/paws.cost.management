@@ -17,7 +17,8 @@ billingconductor_list_billing_groups(
 
 \item{MaxResults}{The maximum number of billing groups to retrieve.}
 
-\item{NextToken}{The pagination token used on subsequent calls to get billing groups.}
+\item{NextToken}{The pagination token that's used on subsequent calls to get billing
+groups.}
 
 \item{Filters}{A \code{ListBillingGroupsFilter} that specifies the billing group and pricing
 plan to retrieve billing group information.}
@@ -25,6 +26,6 @@ plan to retrieve billing group information.}
 \description{
 A paginated call to retrieve a list of billing groups for the given billing period. If you don't provide a billing group, the current billing period is used.
 
-See \url{https://paws-r.github.io/docs/billingconductor/list_billing_groups.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/billingconductor_list_billing_groups/} for full documentation.
 }
 \keyword{internal}

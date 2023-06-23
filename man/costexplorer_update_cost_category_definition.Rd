@@ -6,6 +6,7 @@
 \usage{
 costexplorer_update_cost_category_definition(
   CostCategoryArn,
+  EffectiveStart = NULL,
   RuleVersion,
   Rules,
   DefaultValue = NULL,
@@ -14,6 +15,11 @@ costexplorer_update_cost_category_definition(
 }
 \arguments{
 \item{CostCategoryArn}{[required] The unique identifier for your Cost Category.}
+
+\item{EffectiveStart}{The Cost Category's effective start date. It can only be a billing start
+date (first day of the month). If the date isn't provided, it's the
+first day of the current month. Dates can't be before the previous
+twelve months, or in the future.}
 
 \item{RuleVersion}{[required]}
 
@@ -30,6 +36,6 @@ Category values.}
 \description{
 Updates an existing Cost Category. Changes made to the Cost Category rules will be used to categorize the current month’s expenses and future expenses. This won’t change categorization for the previous months.
 
-See \url{https://paws-r.github.io/docs/costexplorer/update_cost_category_definition.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/costexplorer_update_cost_category_definition/} for full documentation.
 }
 \keyword{internal}

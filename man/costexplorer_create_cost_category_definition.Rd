@@ -6,6 +6,7 @@
 \usage{
 costexplorer_create_cost_category_definition(
   Name,
+  EffectiveStart = NULL,
   RuleVersion,
   Rules,
   DefaultValue = NULL,
@@ -15,6 +16,11 @@ costexplorer_create_cost_category_definition(
 }
 \arguments{
 \item{Name}{[required]}
+
+\item{EffectiveStart}{The Cost Category's effective start date. It can only be a billing start
+date (first day of the month). If the date isn't provided, it's the
+first day of the current month. Dates can't be before the previous
+twelve months, or in the future.}
 
 \item{RuleVersion}{[required]}
 
@@ -51,6 +57,6 @@ for Amazon Web Services use
 \description{
 Creates a new Cost Category with the requested name and rules.
 
-See \url{https://paws-r.github.io/docs/costexplorer/create_cost_category_definition.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/costexplorer_create_cost_category_definition/} for full documentation.
 }
 \keyword{internal}

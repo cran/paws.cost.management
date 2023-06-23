@@ -26,7 +26,9 @@ usage data is retrieved from \code{2017-01-01} up to and including
 \code{2017-04-30} but not including \code{2017-05-01}.}
 
 \item{Dimension}{[required] The name of the dimension. Each \code{Dimension} is available for a different
-\code{Context}. For more information, see \code{Context}.}
+\code{Context}. For more information, see \code{Context}. \code{LINK_ACCOUNT_NAME} and
+\code{SERVICE_CODE} can only be used in
+\href{https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/}{CostCategoryRule}.}
 
 \item{Context}{The context for the call to
 \code{\link[=costexplorer_get_dimension_values]{get_dimension_values}}. This can be
@@ -181,6 +183,6 @@ results than the maximum page size.}
 \description{
 Retrieves all available filter values for a specified filter over a period of time. You can search the dimension values for an arbitrary string.
 
-See \url{https://paws-r.github.io/docs/costexplorer/get_dimension_values.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/costexplorer_get_dimension_values/} for full documentation.
 }
 \keyword{internal}

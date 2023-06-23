@@ -19,11 +19,12 @@ billingconductor_list_pricing_plans(
 
 \item{MaxResults}{The maximum number of pricing plans to retrieve.}
 
-\item{NextToken}{The pagination token used on subsequent call to get pricing plans.}
+\item{NextToken}{The pagination token that's used on subsequent call to get pricing
+plans.}
 }
 \description{
 A paginated call to get pricing plans for the given billing period. If you don't provide a billing period, the current billing period is used.
 
-See \url{https://paws-r.github.io/docs/billingconductor/list_pricing_plans.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/billingconductor_list_pricing_plans/} for full documentation.
 }
 \keyword{internal}

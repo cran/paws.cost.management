@@ -18,7 +18,7 @@ billingconductor_list_billing_group_cost_reports(
 
 \item{MaxResults}{The maximum number of reports to retrieve.}
 
-\item{NextToken}{The pagination token used on subsequent calls to get reports.}
+\item{NextToken}{The pagination token that's used on subsequent calls to get reports.}
 
 \item{Filters}{A \code{ListBillingGroupCostReportsFilter} to specify billing groups to
 retrieve reports from.}
@@ -26,6 +26,6 @@ retrieve reports from.}
 \description{
 A paginated call to retrieve a summary report of actual Amazon Web Services charges and the calculated Amazon Web Services charges based on the associated pricing plan of a billing group.
 
-See \url{https://paws-r.github.io/docs/billingconductor/list_billing_group_cost_reports.html} for full documentation.
+See \url{https://www.paws-r-sdk.com/docs/billingconductor_list_billing_group_cost_reports/} for full documentation.
 }
 \keyword{internal}
