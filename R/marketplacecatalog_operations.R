@@ -3,6 +3,35 @@
 #' @include marketplacecatalog_service.R
 NULL
 
+#' Returns metadata and content for multiple entities
+#'
+#' @description
+#' Returns metadata and content for multiple entities.
+#'
+#' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_batch_describe_entities/](https://www.paws-r-sdk.com/docs/marketplacecatalog_batch_describe_entities/) for full documentation.
+#'
+#' @param EntityRequestList &#91;required&#93; List of entity IDs and the catalogs the entities are present in.
+#'
+#' @keywords internal
+#'
+#' @rdname marketplacecatalog_batch_describe_entities
+marketplacecatalog_batch_describe_entities <- function(EntityRequestList) {
+  op <- new_operation(
+    name = "BatchDescribeEntities",
+    http_method = "POST",
+    http_path = "/BatchDescribeEntities",
+    paginator = list()
+  )
+  input <- .marketplacecatalog$batch_describe_entities_input(EntityRequestList = EntityRequestList)
+  output <- .marketplacecatalog$batch_describe_entities_output()
+  config <- get_config()
+  svc <- .marketplacecatalog$service(config)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.marketplacecatalog$operations$batch_describe_entities <- marketplacecatalog_batch_describe_entities
+
 #' Used to cancel an open change request
 #'
 #' @description
@@ -36,15 +65,15 @@ marketplacecatalog_cancel_change_set <- function(Catalog, ChangeSetId) {
 }
 .marketplacecatalog$operations$cancel_change_set <- marketplacecatalog_cancel_change_set
 
-#' Deletes a resource-based policy on an Entity that is identified by its
+#' Deletes a resource-based policy on an entity that is identified by its
 #' resource ARN
 #'
 #' @description
-#' Deletes a resource-based policy on an Entity that is identified by its resource ARN.
+#' Deletes a resource-based policy on an entity that is identified by its resource ARN.
 #'
 #' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_delete_resource_policy/](https://www.paws-r-sdk.com/docs/marketplacecatalog_delete_resource_policy/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the Entity resource that is associated
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the entity resource that is associated
 #' with the resource policy.
 #'
 #' @keywords internal
@@ -131,15 +160,15 @@ marketplacecatalog_describe_entity <- function(Catalog, EntityId) {
 }
 .marketplacecatalog$operations$describe_entity <- marketplacecatalog_describe_entity
 
-#' Gets a resource-based policy of an Entity that is identified by its
+#' Gets a resource-based policy of an entity that is identified by its
 #' resource ARN
 #'
 #' @description
-#' Gets a resource-based policy of an Entity that is identified by its resource ARN.
+#' Gets a resource-based policy of an entity that is identified by its resource ARN.
 #'
 #' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_get_resource_policy/](https://www.paws-r-sdk.com/docs/marketplacecatalog_get_resource_policy/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the Entity resource that is associated
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the entity resource that is associated
 #' with the resource policy.
 #'
 #' @keywords internal
@@ -207,7 +236,10 @@ marketplacecatalog_list_change_sets <- function(Catalog, FilterList = NULL, Sort
 #' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_list_entities/](https://www.paws-r-sdk.com/docs/marketplacecatalog_list_entities/) for full documentation.
 #'
 #' @param Catalog &#91;required&#93; The catalog related to the request. Fixed value: `AWSMarketplace`
-#' @param EntityType &#91;required&#93; The type of entities to retrieve.
+#' @param EntityType &#91;required&#93; The type of entities to retrieve. Valid values are: `AmiProduct`,
+#' `ContainerProduct`, `DataProduct`, `SaaSProduct`, `ProcurementPolicy`,
+#' `Experience`, `Audience`, `BrandingSettings`, `Offer`, `Seller`,
+#' `ResaleAuthorization`.
 #' @param FilterList An array of filter objects. Each filter object contains two attributes,
 #' `filterName` and `filterValues`.
 #' @param Sort An object that contains two attributes, `SortBy` and `SortOrder`.
@@ -215,19 +247,31 @@ marketplacecatalog_list_change_sets <- function(Catalog, FilterList = NULL, Sort
 #' results.
 #' @param MaxResults Specifies the upper limit of the elements on a single page. If a value
 #' isn't provided, the default value is 20.
-#' @param OwnershipType 
+#' @param OwnershipType Filters the returned set of entities based on their owner. The default
+#' is `SELF`. To list entities shared with you through AWS Resource Access
+#' Manager (AWS RAM), set to `SHARED`. Entities shared through the AWS
+#' Marketplace Catalog API
+#' [`put_resource_policy`][marketplacecatalog_put_resource_policy]
+#' operation can't be discovered through the `SHARED` parameter.
+#' @param EntityTypeFilters A Union object containing filter shapes for all `EntityType`s. Each
+#' `EntityTypeFilter` shape will have filters applicable for that
+#' `EntityType` that can be used to search or filter entities.
+#' @param EntityTypeSort A Union object containing `Sort` shapes for all `EntityType`s. Each
+#' `EntityTypeSort` shape will have `SortBy` and `SortOrder` applicable for
+#' fields on that `EntityType`. This can be used to sort the results of the
+#' filter query.
 #'
 #' @keywords internal
 #'
 #' @rdname marketplacecatalog_list_entities
-marketplacecatalog_list_entities <- function(Catalog, EntityType, FilterList = NULL, Sort = NULL, NextToken = NULL, MaxResults = NULL, OwnershipType = NULL) {
+marketplacecatalog_list_entities <- function(Catalog, EntityType, FilterList = NULL, Sort = NULL, NextToken = NULL, MaxResults = NULL, OwnershipType = NULL, EntityTypeFilters = NULL, EntityTypeSort = NULL) {
   op <- new_operation(
     name = "ListEntities",
     http_method = "POST",
     http_path = "/ListEntities",
     paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults", result_key = "EntitySummaryList")
   )
-  input <- .marketplacecatalog$list_entities_input(Catalog = Catalog, EntityType = EntityType, FilterList = FilterList, Sort = Sort, NextToken = NextToken, MaxResults = MaxResults, OwnershipType = OwnershipType)
+  input <- .marketplacecatalog$list_entities_input(Catalog = Catalog, EntityType = EntityType, FilterList = FilterList, Sort = Sort, NextToken = NextToken, MaxResults = MaxResults, OwnershipType = OwnershipType, EntityTypeFilters = EntityTypeFilters, EntityTypeSort = EntityTypeSort)
   output <- .marketplacecatalog$list_entities_output()
   config <- get_config()
   svc <- .marketplacecatalog$service(config)
@@ -268,14 +312,14 @@ marketplacecatalog_list_tags_for_resource <- function(ResourceArn) {
 }
 .marketplacecatalog$operations$list_tags_for_resource <- marketplacecatalog_list_tags_for_resource
 
-#' Attaches a resource-based policy to an Entity
+#' Attaches a resource-based policy to an entity
 #'
 #' @description
-#' Attaches a resource-based policy to an Entity. Examples of an entity include: `AmiProduct` and `ContainerProduct`.
+#' Attaches a resource-based policy to an entity. Examples of an entity include: `AmiProduct` and `ContainerProduct`.
 #'
 #' See [https://www.paws-r-sdk.com/docs/marketplacecatalog_put_resource_policy/](https://www.paws-r-sdk.com/docs/marketplacecatalog_put_resource_policy/) for full documentation.
 #'
-#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the Entity resource you want to
+#' @param ResourceArn &#91;required&#93; The Amazon Resource Name (ARN) of the entity resource you want to
 #' associate with a resource policy.
 #' @param Policy &#91;required&#93; The policy document to set; formatted in JSON.
 #'

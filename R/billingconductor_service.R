@@ -6,8 +6,8 @@ NULL
 #'
 #' @description
 #' Amazon Web Services Billing Conductor is a fully managed service that
-#' you can use to customize a [pro
-#' forma](https://docs.aws.amazon.com/billingconductor/latest/userguide/#eb-other-definitions)
+#' you can use to customize a
+#' [proforma](https://docs.aws.amazon.com/billingconductor/latest/userguide/#eb-other-definitions)
 #' version of your billing data each month, to accurately show or
 #' chargeback your end customers. Amazon Web Services Billing Conductor
 #' doesn't change the way you're billed by Amazon Web Services each month
@@ -30,33 +30,33 @@ NULL
 #' config
 #' Optional configuration of credentials, endpoint, and/or region.
 #' \itemize{
-#' \item{\strong{credentials}:} {\itemize{
-#' \item{\strong{creds}:} {\itemize{
-#' \item{\strong{access_key_id}:} {AWS access key ID}
-#' \item{\strong{secret_access_key}:} {AWS secret access key}
-#' \item{\strong{session_token}:} {AWS temporary session token}
+#' \item{\strong{credentials}: \itemize{
+#' \item{\strong{creds}: \itemize{
+#' \item{\strong{access_key_id}: AWS access key ID}
+#' \item{\strong{secret_access_key}: AWS secret access key}
+#' \item{\strong{session_token}: AWS temporary session token}
 #' }}
-#' \item{\strong{profile}:} {The name of a profile to use. If not given, then the default profile is used.}
-#' \item{\strong{anonymous}:} {Set anonymous credentials.}
-#' \item{\strong{endpoint}:} {The complete URL to use for the constructed client.}
-#' \item{\strong{region}:} {The AWS Region used in instantiating the client.}
+#' \item{\strong{profile}: The name of a profile to use. If not given, then the default profile is used.}
+#' \item{\strong{anonymous}: Set anonymous credentials.}
 #' }}
-#' \item{\strong{close_connection}:} {Immediately close all HTTP connections.}
-#' \item{\strong{timeout}:} {The time in seconds till a timeout exception is thrown when attempting to make a connection. The default is 60 seconds.}
-#' \item{\strong{s3_force_path_style}:} {Set this to `true` to force the request to use path-style addressing, i.e. `http://s3.amazonaws.com/BUCKET/KEY`.}
-#' \item{\strong{sts_regional_endpoint}:} {Set sts regional endpoint resolver to regional or legacy \url{https://docs.aws.amazon.com/sdkref/latest/guide/feature-sts-regionalized-endpoints.html}}
+#' \item{\strong{endpoint}: The complete URL to use for the constructed client.}
+#' \item{\strong{region}: The AWS Region used in instantiating the client.}
+#' \item{\strong{close_connection}: Immediately close all HTTP connections.}
+#' \item{\strong{timeout}: The time in seconds till a timeout exception is thrown when attempting to make a connection. The default is 60 seconds.}
+#' \item{\strong{s3_force_path_style}: Set this to `true` to force the request to use path-style addressing, i.e. `http://s3.amazonaws.com/BUCKET/KEY`.}
+#' \item{\strong{sts_regional_endpoint}: Set sts regional endpoint resolver to regional or legacy \url{https://docs.aws.amazon.com/sdkref/latest/guide/feature-sts-regionalized-endpoints.html}}
 #' }
 #' @param
 #' credentials
 #' Optional credentials shorthand for the config parameter
 #' \itemize{
-#' \item{\strong{creds}:} {\itemize{
-#' \item{\strong{access_key_id}:} {AWS access key ID}
-#' \item{\strong{secret_access_key}:} {AWS secret access key}
-#' \item{\strong{session_token}:} {AWS temporary session token}
+#' \item{\strong{creds}: \itemize{
+#' \item{\strong{access_key_id}: AWS access key ID}
+#' \item{\strong{secret_access_key}: AWS secret access key}
+#' \item{\strong{session_token}: AWS temporary session token}
 #' }}
-#' \item{\strong{profile}:} {The name of a profile to use. If not given, then the default profile is used.}
-#' \item{\strong{anonymous}:} {Set anonymous credentials.}
+#' \item{\strong{profile}: The name of a profile to use. If not given, then the default profile is used.}
+#' \item{\strong{anonymous}: Set anonymous credentials.}
 #' }
 #' @param
 #' endpoint
@@ -123,6 +123,7 @@ NULL
 #'  \link[=billingconductor_delete_pricing_rule]{delete_pricing_rule} \tab Deletes the pricing rule that's identified by the input Amazon Resource Name (ARN)\cr
 #'  \link[=billingconductor_disassociate_accounts]{disassociate_accounts} \tab Removes the specified list of account IDs from the given billing group\cr
 #'  \link[=billingconductor_disassociate_pricing_rules]{disassociate_pricing_rules} \tab Disassociates a list of pricing rules from a pricing plan\cr
+#'  \link[=billingconductor_get_billing_group_cost_report]{get_billing_group_cost_report} \tab Retrieves the margin summary report, which includes the Amazon Web Services cost and charged amount (pro forma cost) by Amazon Web Service for a specific billing group\cr
 #'  \link[=billingconductor_list_account_associations]{list_account_associations} \tab This is a paginated call to list linked accounts that are linked to the payer account for the specified time period\cr
 #'  \link[=billingconductor_list_billing_group_cost_reports]{list_billing_group_cost_reports} \tab A paginated call to retrieve a summary report of actual Amazon Web Services charges and the calculated Amazon Web Services charges based on the associated pricing plan of a billing group\cr
 #'  \link[=billingconductor_list_billing_groups]{list_billing_groups} \tab A paginated call to retrieve a list of billing groups for the given billing period\cr
