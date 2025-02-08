@@ -2,27 +2,16 @@
 #' @importFrom paws.common new_handlers new_service set_config merge_config
 NULL
 
-#' AWS Cost and Usage Report Service
+#' AWS Billing
 #'
 #' @description
-#' You can use the Amazon Web Services Cost and Usage Report API to
-#' programmatically create, query, and delete Amazon Web Services Cost and
-#' Usage Report definitions.
+#' You can use the Billing API to programatically list the billing views
+#' available to you for a given time period. A billing view represents a
+#' set of billing data.
 #' 
-#' Amazon Web Services Cost and Usage Report track the monthly Amazon Web
-#' Services costs and usage associated with your Amazon Web Services
-#' account. The report contains line items for each unique combination of
-#' Amazon Web Services product, usage type, and operation that your Amazon
-#' Web Services account uses. You can configure the Amazon Web Services
-#' Cost and Usage Report to show only the data that you want, using the
-#' Amazon Web Services Cost and Usage Report API.
+#' The Billing API provides the following endpoint:
 #' 
-#' Service Endpoint
-#' 
-#' The Amazon Web Services Cost and Usage Report API provides the following
-#' endpoint:
-#' 
-#' -   cur.us-east-1.amazonaws.com
+#' `https://billing.us-east-1.api.aws`
 #'
 #' @param
 #' config
@@ -65,7 +54,7 @@ NULL
 #'
 #' @section Service syntax:
 #' ```
-#' svc <- costandusagereportservice(
+#' svc <- billing(
 #'   config = list(
 #'     credentials = list(
 #'       creds = list(
@@ -99,23 +88,24 @@ NULL
 #'
 #' @examples
 #' \dontrun{
-#' svc <- costandusagereportservice()
-#' # The following example deletes the AWS Cost and Usage report named
-#' # ExampleReport.
-#' svc$delete_report_definition(
-#'   ReportName = "ExampleReport"
+#' svc <- billing()
+#' svc$create_billing_view(
+#'   Foo = 123
 #' )
 #' }
 #'
 #' @section Operations:
 #' \tabular{ll}{
-#'  \link[=costandusagereportservice_delete_report_definition]{delete_report_definition} \tab Deletes the specified report\cr
-#'  \link[=costandusagereportservice_describe_report_definitions]{describe_report_definitions} \tab Lists the Amazon Web Services Cost and Usage Report available to this account\cr
-#'  \link[=costandusagereportservice_list_tags_for_resource]{list_tags_for_resource} \tab Lists the tags associated with the specified report definition\cr
-#'  \link[=costandusagereportservice_modify_report_definition]{modify_report_definition} \tab Allows you to programmatically update your report preferences\cr
-#'  \link[=costandusagereportservice_put_report_definition]{put_report_definition} \tab Creates a new report using the description that you provide\cr
-#'  \link[=costandusagereportservice_tag_resource]{tag_resource} \tab Associates a set of tags with a report definition\cr
-#'  \link[=costandusagereportservice_untag_resource]{untag_resource} \tab Disassociates a set of tags from a report definition
+#'  \link[=billing_create_billing_view]{create_billing_view} \tab Creates a billing view with the specified billing view attributes\cr
+#'  \link[=billing_delete_billing_view]{delete_billing_view} \tab Deletes the specified billing view\cr
+#'  \link[=billing_get_billing_view]{get_billing_view} \tab Returns the metadata associated to the specified billing view ARN\cr
+#'  \link[=billing_get_resource_policy]{get_resource_policy} \tab Returns the resource-based policy document attached to the resource in JSON format\cr
+#'  \link[=billing_list_billing_views]{list_billing_views} \tab Lists the billing views available for a given time period\cr
+#'  \link[=billing_list_source_views_for_billing_view]{list_source_views_for_billing_view} \tab Lists the source views (managed Amazon Web Services billing views) associated with the billing view\cr
+#'  \link[=billing_list_tags_for_resource]{list_tags_for_resource} \tab Lists tags associated with the billing view resource\cr
+#'  \link[=billing_tag_resource]{tag_resource} \tab An API operation for adding one or more tags (key-value pairs) to a resource\cr
+#'  \link[=billing_untag_resource]{untag_resource} \tab Removes one or more tags from a resource\cr
+#'  \link[=billing_update_billing_view]{update_billing_view} \tab An API to update the attributes of the billing view
 #' }
 #'
 #' @return
@@ -124,9 +114,9 @@ NULL
 #' to the client. The available operations are listed in the
 #' Operations section.
 #'
-#' @rdname costandusagereportservice
+#' @rdname billing
 #' @export
-costandusagereportservice <- function(config = list(), credentials = list(), endpoint = NULL, region = NULL) {
+billing <- function(config = list(), credentials = list(), endpoint = NULL, region = NULL) {
   config <- merge_config(
     config,
     list(
@@ -135,27 +125,27 @@ costandusagereportservice <- function(config = list(), credentials = list(), end
       region = region
     )
   )
-  svc <- .costandusagereportservice$operations
+  svc <- .billing$operations
   svc <- set_config(svc, config)
   return(svc)
 }
 
 # Private API objects: metadata, handlers, interfaces, etc.
-.costandusagereportservice <- list()
+.billing <- list()
 
-.costandusagereportservice$operations <- list()
+.billing$operations <- list()
 
-.costandusagereportservice$metadata <- list(
-  service_name = "cur",
-  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "cur.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "cur.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "cur.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "cur.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "cur.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "cur.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "cur.{region}.csp.hci.ic.gov", global = FALSE)),
-  service_id = "Cost and Usage Report Service",
-  api_version = "2017-01-06",
-  signing_name = "cur",
-  json_version = "1.1",
-  target_prefix = "AWSOrigamiServiceGatewayService"
+.billing$metadata <- list(
+  service_name = "billing",
+  endpoints = list("^(us|eu|ap|sa|ca|me|af|il|mx)\\-\\w+\\-\\d+$" = list(endpoint = "billing.{region}.amazonaws.com", global = FALSE), "^cn\\-\\w+\\-\\d+$" = list(endpoint = "billing.{region}.amazonaws.com.cn", global = FALSE), "^us\\-gov\\-\\w+\\-\\d+$" = list(endpoint = "billing.{region}.amazonaws.com", global = FALSE), "^us\\-iso\\-\\w+\\-\\d+$" = list(endpoint = "billing.{region}.c2s.ic.gov", global = FALSE), "^us\\-isob\\-\\w+\\-\\d+$" = list(endpoint = "billing.{region}.sc2s.sgov.gov", global = FALSE), "^eu\\-isoe\\-\\w+\\-\\d+$" = list(endpoint = "billing.{region}.cloud.adc-e.uk", global = FALSE), "^us\\-isof\\-\\w+\\-\\d+$" = list(endpoint = "billing.{region}.csp.hci.ic.gov", global = FALSE)),
+  service_id = "Billing",
+  api_version = "2023-09-07",
+  signing_name = "billing",
+  json_version = "1.0",
+  target_prefix = "AWSBilling"
 )
 
-.costandusagereportservice$service <- function(config = list(), op = NULL) {
+.billing$service <- function(config = list(), op = NULL) {
   handlers <- new_handlers("jsonrpc", "v4")
-  new_service(.costandusagereportservice$metadata, handlers, config, op)
+  new_service(.billing$metadata, handlers, config, op)
 }

@@ -47,7 +47,8 @@ costexplorer_create_anomaly_monitor <- function(AnomalyMonitor, ResourceTags = N
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$create_anomaly_monitor_input(AnomalyMonitor = AnomalyMonitor, ResourceTags = ResourceTags)
   output <- .costexplorer$create_anomaly_monitor_output()
@@ -102,7 +103,8 @@ costexplorer_create_anomaly_subscription <- function(AnomalySubscription, Resour
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$create_anomaly_subscription_input(AnomalySubscription = AnomalySubscription, ResourceTags = ResourceTags)
   output <- .costexplorer$create_anomaly_subscription_output()
@@ -168,7 +170,8 @@ costexplorer_create_cost_category_definition <- function(Name, EffectiveStart = 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$create_cost_category_definition_input(Name = Name, EffectiveStart = EffectiveStart, RuleVersion = RuleVersion, Rules = Rules, DefaultValue = DefaultValue, SplitChargeRules = SplitChargeRules, ResourceTags = ResourceTags)
   output <- .costexplorer$create_cost_category_definition_output()
@@ -199,7 +202,8 @@ costexplorer_delete_anomaly_monitor <- function(MonitorArn) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$delete_anomaly_monitor_input(MonitorArn = MonitorArn)
   output <- .costexplorer$delete_anomaly_monitor_output()
@@ -230,7 +234,8 @@ costexplorer_delete_anomaly_subscription <- function(SubscriptionArn) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$delete_anomaly_subscription_input(SubscriptionArn = SubscriptionArn)
   output <- .costexplorer$delete_anomaly_subscription_output()
@@ -260,7 +265,8 @@ costexplorer_delete_cost_category_definition <- function(CostCategoryArn) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$delete_cost_category_definition_input(CostCategoryArn = CostCategoryArn)
   output <- .costexplorer$delete_cost_category_definition_output()
@@ -292,7 +298,8 @@ costexplorer_describe_cost_category_definition <- function(CostCategoryArn, Effe
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$describe_cost_category_definition_input(CostCategoryArn = CostCategoryArn, EffectiveOn = EffectiveOn)
   output <- .costexplorer$describe_cost_category_definition_output()
@@ -335,7 +342,8 @@ costexplorer_get_anomalies <- function(MonitorArn = NULL, DateInterval, Feedback
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_anomalies_input(MonitorArn = MonitorArn, DateInterval = DateInterval, Feedback = Feedback, TotalImpact = TotalImpact, NextPageToken = NextPageToken, MaxResults = MaxResults)
   output <- .costexplorer$get_anomalies_output()
@@ -369,7 +377,8 @@ costexplorer_get_anomaly_monitors <- function(MonitorArnList = NULL, NextPageTok
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_anomaly_monitors_input(MonitorArnList = MonitorArnList, NextPageToken = NextPageToken, MaxResults = MaxResults)
   output <- .costexplorer$get_anomaly_monitors_output()
@@ -404,7 +413,8 @@ costexplorer_get_anomaly_subscriptions <- function(SubscriptionArnList = NULL, M
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_anomaly_subscriptions_input(SubscriptionArnList = SubscriptionArnList, MonitorArn = MonitorArn, NextPageToken = NextPageToken, MaxResults = MaxResults)
   output <- .costexplorer$get_anomaly_subscriptions_output()
@@ -441,7 +451,8 @@ costexplorer_get_approximate_usage_records <- function(Granularity, Services = N
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_approximate_usage_records_input(Granularity = Granularity, Services = Services, ApproximationDimension = ApproximationDimension)
   output <- .costexplorer$get_approximate_usage_records_output()
@@ -452,6 +463,37 @@ costexplorer_get_approximate_usage_records <- function(Granularity, Services = N
   return(response)
 }
 .costexplorer$operations$get_approximate_usage_records <- costexplorer_get_approximate_usage_records
+
+#' Retrieves a commitment purchase analysis result based on the AnalysisId
+#'
+#' @description
+#' Retrieves a commitment purchase analysis result based on the `AnalysisId`.
+#'
+#' See [https://www.paws-r-sdk.com/docs/costexplorer_get_commitment_purchase_analysis/](https://www.paws-r-sdk.com/docs/costexplorer_get_commitment_purchase_analysis/) for full documentation.
+#'
+#' @param AnalysisId &#91;required&#93; The analysis ID that's associated with the commitment purchase analysis.
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_get_commitment_purchase_analysis
+costexplorer_get_commitment_purchase_analysis <- function(AnalysisId) {
+  op <- new_operation(
+    name = "GetCommitmentPurchaseAnalysis",
+    http_method = "POST",
+    http_path = "/",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .costexplorer$get_commitment_purchase_analysis_input(AnalysisId = AnalysisId)
+  output <- .costexplorer$get_commitment_purchase_analysis_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$get_commitment_purchase_analysis <- costexplorer_get_commitment_purchase_analysis
 
 #' Retrieves cost and usage metrics for your account
 #'
@@ -510,6 +552,12 @@ costexplorer_get_approximate_usage_records <- function(Granularity, Services = N
 #' 
 #' When you group by the `TAG` type and include a valid tag key, you get
 #' all tag values, including empty strings.
+#' @param BillingViewArn The Amazon Resource Name (ARN) that uniquely identifies a specific
+#' billing view. The ARN is used to specify which particular billing view
+#' you want to interact with or retrieve information from when making API
+#' calls related to Amazon Web Services Billing and Cost Management
+#' features. The BillingViewArn can be retrieved by calling the
+#' ListBillingViews API.
 #' @param NextPageToken The token to retrieve the next set of results. Amazon Web Services
 #' provides the token when the response from a previous call has more
 #' results than the maximum page size.
@@ -517,15 +565,16 @@ costexplorer_get_approximate_usage_records <- function(Granularity, Services = N
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_cost_and_usage
-costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity, Filter = NULL, Metrics, GroupBy = NULL, NextPageToken = NULL) {
+costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity, Filter = NULL, Metrics, GroupBy = NULL, BillingViewArn = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetCostAndUsage",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .costexplorer$get_cost_and_usage_input(TimePeriod = TimePeriod, Granularity = Granularity, Filter = Filter, Metrics = Metrics, GroupBy = GroupBy, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_cost_and_usage_input(TimePeriod = TimePeriod, Granularity = Granularity, Filter = Filter, Metrics = Metrics, GroupBy = GroupBy, BillingViewArn = BillingViewArn, NextPageToken = NextPageToken)
   output <- .costexplorer$get_cost_and_usage_output()
   config <- get_config()
   svc <- .costexplorer$service(config, op)
@@ -593,6 +642,12 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity, Filter = NU
 #' requests.
 #' @param GroupBy You can group Amazon Web Services costs using up to two different
 #' groups: `DIMENSION`, `TAG`, `COST_CATEGORY`.
+#' @param BillingViewArn The Amazon Resource Name (ARN) that uniquely identifies a specific
+#' billing view. The ARN is used to specify which particular billing view
+#' you want to interact with or retrieve information from when making API
+#' calls related to Amazon Web Services Billing and Cost Management
+#' features. The BillingViewArn can be retrieved by calling the
+#' ListBillingViews API.
 #' @param NextPageToken The token to retrieve the next set of results. Amazon Web Services
 #' provides the token when the response from a previous call has more
 #' results than the maximum page size.
@@ -600,15 +655,16 @@ costexplorer_get_cost_and_usage <- function(TimePeriod, Granularity, Filter = NU
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_cost_and_usage_with_resources
-costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granularity, Filter, Metrics = NULL, GroupBy = NULL, NextPageToken = NULL) {
+costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granularity, Filter, Metrics = NULL, GroupBy = NULL, BillingViewArn = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetCostAndUsageWithResources",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .costexplorer$get_cost_and_usage_with_resources_input(TimePeriod = TimePeriod, Granularity = Granularity, Filter = Filter, Metrics = Metrics, GroupBy = GroupBy, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_cost_and_usage_with_resources_input(TimePeriod = TimePeriod, Granularity = Granularity, Filter = Filter, Metrics = Metrics, GroupBy = GroupBy, BillingViewArn = BillingViewArn, NextPageToken = NextPageToken)
   output <- .costexplorer$get_cost_and_usage_with_resources_output()
   config <- get_config()
   svc <- .costexplorer$service(config, op)
@@ -658,6 +714,12 @@ costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granulari
 #' 
 #' When you use the `SortBy` value, the `NextPageToken` and `SearchString`
 #' key values aren't supported.
+#' @param BillingViewArn The Amazon Resource Name (ARN) that uniquely identifies a specific
+#' billing view. The ARN is used to specify which particular billing view
+#' you want to interact with or retrieve information from when making API
+#' calls related to Amazon Web Services Billing and Cost Management
+#' features. The BillingViewArn can be retrieved by calling the
+#' ListBillingViews API.
 #' @param MaxResults This field is only used when the `SortBy` value is provided in the
 #' request.
 #' 
@@ -675,15 +737,16 @@ costexplorer_get_cost_and_usage_with_resources <- function(TimePeriod, Granulari
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_cost_categories
-costexplorer_get_cost_categories <- function(SearchString = NULL, TimePeriod, CostCategoryName = NULL, Filter = NULL, SortBy = NULL, MaxResults = NULL, NextPageToken = NULL) {
+costexplorer_get_cost_categories <- function(SearchString = NULL, TimePeriod, CostCategoryName = NULL, Filter = NULL, SortBy = NULL, BillingViewArn = NULL, MaxResults = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetCostCategories",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .costexplorer$get_cost_categories_input(SearchString = SearchString, TimePeriod = TimePeriod, CostCategoryName = CostCategoryName, Filter = Filter, SortBy = SortBy, MaxResults = MaxResults, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_cost_categories_input(SearchString = SearchString, TimePeriod = TimePeriod, CostCategoryName = CostCategoryName, Filter = Filter, SortBy = SortBy, BillingViewArn = BillingViewArn, MaxResults = MaxResults, NextPageToken = NextPageToken)
   output <- .costexplorer$get_cost_categories_output()
   config <- get_config()
   svc <- .costexplorer$service(config, op)
@@ -775,6 +838,12 @@ costexplorer_get_cost_categories <- function(SearchString = NULL, TimePeriod, Co
 #' -   `RESERVATION_ID`
 #' 
 #' -   `SAVINGS_PLAN_ARN`
+#' @param BillingViewArn The Amazon Resource Name (ARN) that uniquely identifies a specific
+#' billing view. The ARN is used to specify which particular billing view
+#' you want to interact with or retrieve information from when making API
+#' calls related to Amazon Web Services Billing and Cost Management
+#' features. The BillingViewArn can be retrieved by calling the
+#' ListBillingViews API.
 #' @param PredictionIntervalLevel Cost Explorer always returns the mean forecast as a single point. You
 #' can request a prediction interval around the mean by specifying a
 #' confidence level. The higher the confidence level, the more confident
@@ -784,15 +853,16 @@ costexplorer_get_cost_categories <- function(SearchString = NULL, TimePeriod, Co
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_cost_forecast
-costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filter = NULL, PredictionIntervalLevel = NULL) {
+costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filter = NULL, BillingViewArn = NULL, PredictionIntervalLevel = NULL) {
   op <- new_operation(
     name = "GetCostForecast",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .costexplorer$get_cost_forecast_input(TimePeriod = TimePeriod, Metric = Metric, Granularity = Granularity, Filter = Filter, PredictionIntervalLevel = PredictionIntervalLevel)
+  input <- .costexplorer$get_cost_forecast_input(TimePeriod = TimePeriod, Metric = Metric, Granularity = Granularity, Filter = Filter, BillingViewArn = BillingViewArn, PredictionIntervalLevel = PredictionIntervalLevel)
   output <- .costexplorer$get_cost_forecast_output()
   config <- get_config()
   svc <- .costexplorer$service(config, op)
@@ -839,10 +909,11 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #'     with. Possible values are the following:
 #' 
 #'     \- Amazon Web Services(Amazon Web Services): The entity that sells
-#'     Amazon Web Services.
+#'     Amazon Web Services services.
 #' 
 #'     \- AISPL (Amazon Internet Services Pvt. Ltd.): The local Indian
-#'     entity that's an acting reseller for Amazon Web Services in India.
+#'     entity that's an acting reseller for Amazon Web Services services in
+#'     India.
 #' 
 #'     \- Amazon Web Services Marketplace: The entity that supports the
 #'     sale of solutions that are built on Amazon Web Services by
@@ -994,6 +1065,12 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #' When you specify a `SortBy` paramater, the context must be
 #' `COST_AND_USAGE`. Further, when using `SortBy`, `NextPageToken` and
 #' `SearchString` aren't supported.
+#' @param BillingViewArn The Amazon Resource Name (ARN) that uniquely identifies a specific
+#' billing view. The ARN is used to specify which particular billing view
+#' you want to interact with or retrieve information from when making API
+#' calls related to Amazon Web Services Billing and Cost Management
+#' features. The BillingViewArn can be retrieved by calling the
+#' ListBillingViews API.
 #' @param MaxResults This field is only used when SortBy is provided in the request. The
 #' maximum number of objects that are returned for this request. If
 #' MaxResults isn't specified with SortBy, the request returns 1000 results
@@ -1008,15 +1085,16 @@ costexplorer_get_cost_forecast <- function(TimePeriod, Metric, Granularity, Filt
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_dimension_values
-costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, Dimension, Context = NULL, Filter = NULL, SortBy = NULL, MaxResults = NULL, NextPageToken = NULL) {
+costexplorer_get_dimension_values <- function(SearchString = NULL, TimePeriod, Dimension, Context = NULL, Filter = NULL, SortBy = NULL, BillingViewArn = NULL, MaxResults = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetDimensionValues",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .costexplorer$get_dimension_values_input(SearchString = SearchString, TimePeriod = TimePeriod, Dimension = Dimension, Context = Context, Filter = Filter, SortBy = SortBy, MaxResults = MaxResults, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_dimension_values_input(SearchString = SearchString, TimePeriod = TimePeriod, Dimension = Dimension, Context = Context, Filter = Filter, SortBy = SortBy, BillingViewArn = BillingViewArn, MaxResults = MaxResults, NextPageToken = NextPageToken)
   output <- .costexplorer$get_dimension_values_output()
   config <- get_config()
   svc <- .costexplorer$service(config, op)
@@ -1158,7 +1236,8 @@ costexplorer_get_reservation_coverage <- function(TimePeriod, GroupBy = NULL, Gr
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_reservation_coverage_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, Metrics = Metrics, NextPageToken = NextPageToken, SortBy = SortBy, MaxResults = MaxResults)
   output <- .costexplorer$get_reservation_coverage_output()
@@ -1206,7 +1285,8 @@ costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NUL
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_reservation_purchase_recommendation_input(AccountId = AccountId, Service = Service, Filter = Filter, AccountScope = AccountScope, LookbackPeriodInDays = LookbackPeriodInDays, TermInYears = TermInYears, PaymentOption = PaymentOption, ServiceSpecification = ServiceSpecification, PageSize = PageSize, NextPageToken = NextPageToken)
   output <- .costexplorer$get_reservation_purchase_recommendation_output()
@@ -1260,6 +1340,12 @@ costexplorer_get_reservation_purchase_recommendation <- function(AccountId = NUL
 #' -   REGION
 #' 
 #' -   SERVICE
+#' 
+#'     If not specified, the `SERVICE` filter defaults to Amazon Elastic
+#'     Compute Cloud - Compute. Supported values for `SERVICE` are Amazon
+#'     Elastic Compute Cloud - Compute, Amazon Relational Database Service,
+#'     Amazon ElastiCache, Amazon Redshift, and Amazon Elasticsearch
+#'     Service. The value for the `SERVICE` filter should not exceed "1".
 #' 
 #' -   SCOPE
 #' 
@@ -1327,7 +1413,8 @@ costexplorer_get_reservation_utilization <- function(TimePeriod, GroupBy = NULL,
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_reservation_utilization_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, SortBy = SortBy, NextPageToken = NextPageToken, MaxResults = MaxResults)
   output <- .costexplorer$get_reservation_utilization_output()
@@ -1372,7 +1459,8 @@ costexplorer_get_rightsizing_recommendation <- function(Filter = NULL, Configura
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_rightsizing_recommendation_input(Filter = Filter, Configuration = Configuration, Service = Service, PageSize = PageSize, NextPageToken = NextPageToken)
   output <- .costexplorer$get_rightsizing_recommendation_output()
@@ -1402,7 +1490,8 @@ costexplorer_get_savings_plan_purchase_recommendation_details <- function(Recomm
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_savings_plan_purchase_recommendation_details_input(RecommendationDetailId = RecommendationDetailId)
   output <- .costexplorer$get_savings_plan_purchase_recommendation_details_output()
@@ -1488,7 +1577,8 @@ costexplorer_get_savings_plans_coverage <- function(TimePeriod, GroupBy = NULL, 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_savings_plans_coverage_input(TimePeriod = TimePeriod, GroupBy = GroupBy, Granularity = Granularity, Filter = Filter, Metrics = Metrics, NextToken = NextToken, MaxResults = MaxResults, SortBy = SortBy)
   output <- .costexplorer$get_savings_plans_coverage_output()
@@ -1544,7 +1634,8 @@ costexplorer_get_savings_plans_purchase_recommendation <- function(SavingsPlansT
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_savings_plans_purchase_recommendation_input(SavingsPlansType = SavingsPlansType, TermInYears = TermInYears, PaymentOption = PaymentOption, AccountScope = AccountScope, NextPageToken = NextPageToken, PageSize = PageSize, LookbackPeriodInDays = LookbackPeriodInDays, Filter = Filter)
   output <- .costexplorer$get_savings_plans_purchase_recommendation_output()
@@ -1619,7 +1710,8 @@ costexplorer_get_savings_plans_utilization <- function(TimePeriod, Granularity =
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_savings_plans_utilization_input(TimePeriod = TimePeriod, Granularity = Granularity, Filter = Filter, SortBy = SortBy)
   output <- .costexplorer$get_savings_plans_utilization_output()
@@ -1696,7 +1788,8 @@ costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filte
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .costexplorer$get_savings_plans_utilization_details_input(TimePeriod = TimePeriod, Filter = Filter, DataType = DataType, NextToken = NextToken, MaxResults = MaxResults, SortBy = SortBy)
   output <- .costexplorer$get_savings_plans_utilization_details_output()
@@ -1746,6 +1839,12 @@ costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filte
 #' 
 #' When you use `SortBy`, `NextPageToken` and `SearchString` aren't
 #' supported.
+#' @param BillingViewArn The Amazon Resource Name (ARN) that uniquely identifies a specific
+#' billing view. The ARN is used to specify which particular billing view
+#' you want to interact with or retrieve information from when making API
+#' calls related to Amazon Web Services Billing and Cost Management
+#' features. The BillingViewArn can be retrieved by calling the
+#' ListBillingViews API.
 #' @param MaxResults This field is only used when SortBy is provided in the request. The
 #' maximum number of objects that are returned for this request. If
 #' MaxResults isn't specified with SortBy, the request returns 1000 results
@@ -1760,15 +1859,16 @@ costexplorer_get_savings_plans_utilization_details <- function(TimePeriod, Filte
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_tags
-costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL, Filter = NULL, SortBy = NULL, MaxResults = NULL, NextPageToken = NULL) {
+costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL, Filter = NULL, SortBy = NULL, BillingViewArn = NULL, MaxResults = NULL, NextPageToken = NULL) {
   op <- new_operation(
     name = "GetTags",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .costexplorer$get_tags_input(SearchString = SearchString, TimePeriod = TimePeriod, TagKey = TagKey, Filter = Filter, SortBy = SortBy, MaxResults = MaxResults, NextPageToken = NextPageToken)
+  input <- .costexplorer$get_tags_input(SearchString = SearchString, TimePeriod = TimePeriod, TagKey = TagKey, Filter = Filter, SortBy = SortBy, BillingViewArn = BillingViewArn, MaxResults = MaxResults, NextPageToken = NextPageToken)
   output <- .costexplorer$get_tags_output()
   config <- get_config()
   svc <- .costexplorer$service(config, op)
@@ -1857,6 +1957,12 @@ costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL
 #' -   `RESERVATION_ID`
 #' 
 #' -   `SAVINGS_PLAN_ARN`
+#' @param BillingViewArn The Amazon Resource Name (ARN) that uniquely identifies a specific
+#' billing view. The ARN is used to specify which particular billing view
+#' you want to interact with or retrieve information from when making API
+#' calls related to Amazon Web Services Billing and Cost Management
+#' features. The BillingViewArn can be retrieved by calling the
+#' ListBillingViews API.
 #' @param PredictionIntervalLevel Amazon Web Services Cost Explorer always returns the mean forecast as a
 #' single point. You can request a prediction interval around the mean by
 #' specifying a confidence level. The higher the confidence level, the more
@@ -1867,15 +1973,16 @@ costexplorer_get_tags <- function(SearchString = NULL, TimePeriod, TagKey = NULL
 #' @keywords internal
 #'
 #' @rdname costexplorer_get_usage_forecast
-costexplorer_get_usage_forecast <- function(TimePeriod, Metric, Granularity, Filter = NULL, PredictionIntervalLevel = NULL) {
+costexplorer_get_usage_forecast <- function(TimePeriod, Metric, Granularity, Filter = NULL, BillingViewArn = NULL, PredictionIntervalLevel = NULL) {
   op <- new_operation(
     name = "GetUsageForecast",
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
-  input <- .costexplorer$get_usage_forecast_input(TimePeriod = TimePeriod, Metric = Metric, Granularity = Granularity, Filter = Filter, PredictionIntervalLevel = PredictionIntervalLevel)
+  input <- .costexplorer$get_usage_forecast_input(TimePeriod = TimePeriod, Metric = Metric, Granularity = Granularity, Filter = Filter, BillingViewArn = BillingViewArn, PredictionIntervalLevel = PredictionIntervalLevel)
   output <- .costexplorer$get_usage_forecast_output()
   config <- get_config()
   svc <- .costexplorer$service(config, op)
@@ -1884,6 +1991,41 @@ costexplorer_get_usage_forecast <- function(TimePeriod, Metric, Granularity, Fil
   return(response)
 }
 .costexplorer$operations$get_usage_forecast <- costexplorer_get_usage_forecast
+
+#' Lists the commitment purchase analyses for your account
+#'
+#' @description
+#' Lists the commitment purchase analyses for your account.
+#'
+#' See [https://www.paws-r-sdk.com/docs/costexplorer_list_commitment_purchase_analyses/](https://www.paws-r-sdk.com/docs/costexplorer_list_commitment_purchase_analyses/) for full documentation.
+#'
+#' @param AnalysisStatus The status of the analysis.
+#' @param NextPageToken The token to retrieve the next set of results.
+#' @param PageSize The number of analyses that you want returned in a single response
+#' object.
+#' @param AnalysisIds The analysis IDs associated with the commitment purchase analyses.
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_list_commitment_purchase_analyses
+costexplorer_list_commitment_purchase_analyses <- function(AnalysisStatus = NULL, NextPageToken = NULL, PageSize = NULL, AnalysisIds = NULL) {
+  op <- new_operation(
+    name = "ListCommitmentPurchaseAnalyses",
+    http_method = "POST",
+    http_path = "/",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .costexplorer$list_commitment_purchase_analyses_input(AnalysisStatus = AnalysisStatus, NextPageToken = NextPageToken, PageSize = PageSize, AnalysisIds = AnalysisIds)
+  output <- .costexplorer$list_commitment_purchase_analyses_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$list_commitment_purchase_analyses <- costexplorer_list_commitment_purchase_analyses
 
 #' Retrieves a list of your historical cost allocation tag backfill
 #' requests
@@ -1907,7 +2049,8 @@ costexplorer_list_cost_allocation_tag_backfill_history <- function(NextToken = N
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .costexplorer$list_cost_allocation_tag_backfill_history_input(NextToken = NextToken, MaxResults = MaxResults)
   output <- .costexplorer$list_cost_allocation_tag_backfill_history_output()
@@ -1949,7 +2092,8 @@ costexplorer_list_cost_allocation_tags <- function(Status = NULL, TagKeys = NULL
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .costexplorer$list_cost_allocation_tags_input(Status = Status, TagKeys = TagKeys, Type = Type, NextToken = NextToken, MaxResults = MaxResults)
   output <- .costexplorer$list_cost_allocation_tags_output()
@@ -1984,7 +2128,8 @@ costexplorer_list_cost_category_definitions <- function(EffectiveOn = NULL, Next
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults")
+    paginator = list(input_token = "NextToken", output_token = "NextToken", limit_key = "MaxResults"),
+    stream_api = FALSE
   )
   input <- .costexplorer$list_cost_category_definitions_input(EffectiveOn = EffectiveOn, NextToken = NextToken, MaxResults = MaxResults)
   output <- .costexplorer$list_cost_category_definitions_output()
@@ -2019,7 +2164,8 @@ costexplorer_list_savings_plans_purchase_recommendation_generation <- function(G
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$list_savings_plans_purchase_recommendation_generation_input(GenerationStatus = GenerationStatus, RecommendationIds = RecommendationIds, PageSize = PageSize, NextPageToken = NextPageToken)
   output <- .costexplorer$list_savings_plans_purchase_recommendation_generation_output()
@@ -2052,7 +2198,8 @@ costexplorer_list_tags_for_resource <- function(ResourceArn) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$list_tags_for_resource_input(ResourceArn = ResourceArn)
   output <- .costexplorer$list_tags_for_resource_output()
@@ -2084,7 +2231,8 @@ costexplorer_provide_anomaly_feedback <- function(AnomalyId, Feedback) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$provide_anomaly_feedback_input(AnomalyId = AnomalyId, Feedback = Feedback)
   output <- .costexplorer$provide_anomaly_feedback_output()
@@ -2095,6 +2243,38 @@ costexplorer_provide_anomaly_feedback <- function(AnomalyId, Feedback) {
   return(response)
 }
 .costexplorer$operations$provide_anomaly_feedback <- costexplorer_provide_anomaly_feedback
+
+#' Specifies the parameters of a planned commitment purchase and starts the
+#' generation of the analysis
+#'
+#' @description
+#' Specifies the parameters of a planned commitment purchase and starts the generation of the analysis. This enables you to estimate the cost, coverage, and utilization impact of your planned commitment purchases.
+#'
+#' See [https://www.paws-r-sdk.com/docs/costexplorer_start_commitment_purchase_analysis/](https://www.paws-r-sdk.com/docs/costexplorer_start_commitment_purchase_analysis/) for full documentation.
+#'
+#' @param CommitmentPurchaseAnalysisConfiguration &#91;required&#93; The configuration for the commitment purchase analysis.
+#'
+#' @keywords internal
+#'
+#' @rdname costexplorer_start_commitment_purchase_analysis
+costexplorer_start_commitment_purchase_analysis <- function(CommitmentPurchaseAnalysisConfiguration) {
+  op <- new_operation(
+    name = "StartCommitmentPurchaseAnalysis",
+    http_method = "POST",
+    http_path = "/",
+    host_prefix = "",
+    paginator = list(),
+    stream_api = FALSE
+  )
+  input <- .costexplorer$start_commitment_purchase_analysis_input(CommitmentPurchaseAnalysisConfiguration = CommitmentPurchaseAnalysisConfiguration)
+  output <- .costexplorer$start_commitment_purchase_analysis_output()
+  config <- get_config()
+  svc <- .costexplorer$service(config, op)
+  request <- new_request(svc, op, input, output)
+  response <- send_request(request)
+  return(response)
+}
+.costexplorer$operations$start_commitment_purchase_analysis <- costexplorer_start_commitment_purchase_analysis
 
 #' Request a cost allocation tag backfill
 #'
@@ -2116,7 +2296,8 @@ costexplorer_start_cost_allocation_tag_backfill <- function(BackfillFrom) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$start_cost_allocation_tag_backfill_input(BackfillFrom = BackfillFrom)
   output <- .costexplorer$start_cost_allocation_tag_backfill_output()
@@ -2146,7 +2327,8 @@ costexplorer_start_savings_plans_purchase_recommendation_generation <- function(
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$start_savings_plans_purchase_recommendation_generation_input()
   output <- .costexplorer$start_savings_plans_purchase_recommendation_generation_output()
@@ -2201,7 +2383,8 @@ costexplorer_tag_resource <- function(ResourceArn, ResourceTags) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$tag_resource_input(ResourceArn = ResourceArn, ResourceTags = ResourceTags)
   output <- .costexplorer$tag_resource_output()
@@ -2237,7 +2420,8 @@ costexplorer_untag_resource <- function(ResourceArn, ResourceTagKeys) {
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$untag_resource_input(ResourceArn = ResourceArn, ResourceTagKeys = ResourceTagKeys)
   output <- .costexplorer$untag_resource_output()
@@ -2268,7 +2452,8 @@ costexplorer_update_anomaly_monitor <- function(MonitorArn, MonitorName = NULL) 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$update_anomaly_monitor_input(MonitorArn = MonitorArn, MonitorName = MonitorName)
   output <- .costexplorer$update_anomaly_monitor_output()
@@ -2339,7 +2524,8 @@ costexplorer_update_anomaly_subscription <- function(SubscriptionArn, Threshold 
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$update_anomaly_subscription_input(SubscriptionArn = SubscriptionArn, Threshold = Threshold, Frequency = Frequency, MonitorArnList = MonitorArnList, Subscribers = Subscribers, SubscriptionName = SubscriptionName, ThresholdExpression = ThresholdExpression)
   output <- .costexplorer$update_anomaly_subscription_output()
@@ -2371,7 +2557,8 @@ costexplorer_update_cost_allocation_tags_status <- function(CostAllocationTagsSt
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$update_cost_allocation_tags_status_input(CostAllocationTagsStatus = CostAllocationTagsStatus)
   output <- .costexplorer$update_cost_allocation_tags_status_output()
@@ -2413,7 +2600,8 @@ costexplorer_update_cost_category_definition <- function(CostCategoryArn, Effect
     http_method = "POST",
     http_path = "/",
     host_prefix = "",
-    paginator = list()
+    paginator = list(),
+    stream_api = FALSE
   )
   input <- .costexplorer$update_cost_category_definition_input(CostCategoryArn = CostCategoryArn, EffectiveStart = EffectiveStart, RuleVersion = RuleVersion, Rules = Rules, DefaultValue = DefaultValue, SplitChargeRules = SplitChargeRules)
   output <- .costexplorer$update_cost_category_definition_output()

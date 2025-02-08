@@ -12,6 +12,7 @@ costexplorer_get_dimension_values(
   Context = NULL,
   Filter = NULL,
   SortBy = NULL,
+  BillingViewArn = NULL,
   MaxResults = NULL,
   NextPageToken = NULL
 )
@@ -48,10 +49,11 @@ dimensions for searching:
 with. Possible values are the following:
 
 \- Amazon Web Services(Amazon Web Services): The entity that sells
-Amazon Web Services.
+Amazon Web Services services.
 
 \- AISPL (Amazon Internet Services Pvt. Ltd.): The local Indian
-entity that's an acting reseller for Amazon Web Services in India.
+entity that's an acting reseller for Amazon Web Services services in
+India.
 
 \- Amazon Web Services Marketplace: The entity that supports the
 sale of solutions that are built on Amazon Web Services by
@@ -167,6 +169,13 @@ The supported values for the \code{SortOrder} key are \code{ASCENDING} or
 When you specify a \code{SortBy} paramater, the context must be
 \code{COST_AND_USAGE}. Further, when using \code{SortBy}, \code{NextPageToken} and
 \code{SearchString} aren't supported.}
+
+\item{BillingViewArn}{The Amazon Resource Name (ARN) that uniquely identifies a specific
+billing view. The ARN is used to specify which particular billing view
+you want to interact with or retrieve information from when making API
+calls related to Amazon Web Services Billing and Cost Management
+features. The BillingViewArn can be retrieved by calling the
+ListBillingViews API.}
 
 \item{MaxResults}{This field is only used when SortBy is provided in the request. The
 maximum number of objects that are returned for this request. If
